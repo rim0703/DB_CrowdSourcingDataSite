@@ -10,7 +10,10 @@
 
 # personal_database
 /database
+<<<<<<< HEAD
 /config
+=======
+>>>>>>> 1a4c1cc376689bff4fc759bac04069fec3f38c09
 
 # production
 /build
