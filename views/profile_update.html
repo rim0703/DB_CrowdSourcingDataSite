@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <form action='/userinfo/submit/{{user.id}}?_method=PUT' method="POST">
+        <!--
+        <div class="form-group required control-label"> 
+            <label>
+            <span>비밀번호 변경</span>
+            <input class="form-control" type="password" name='password' required='required'/>
+            </label>
+        </div>-->
+        <label>
+            <span>사용자ID</span>
+            <input class="form-control" type="text" name='id' value={{user.id}} disabled>
+        </label>
+        <div class="form-group required control-label"> 
+            <label>
+            <span>이메일</span>
+            <input class="form-control" type="email" name='email' value={{user.email}}>
+            </label>
+        </div>
+        <div class="form-group required control-label"> 
+            <label>
+            <span>이름</span>
+            <input class="form-control" type="text" name='username' value={{user.username}}>
+            </label>
+        </div>
+        <div class="form-group required control-label"> 
+            <label>
+            <span>성별 </span>
+            {% if user.sex=='남자' %}
+            <input type="radio" name="sex" value='남자' checked> <span>남자</span>
+            <input type="radio" name="sex" value='여자'/> <span>여자</span> 
+            {% endif %}
+            {% if user.sex=='여자' %}
+            <input type="radio" name="sex" value='남자' > <span>남자</span>
+            <input type="radio" name="sex" value='여자'checked> <span>여자</span> 
+            {% endif %}
+            </label>
+        </div>
+        <h4>아래 추가내용은 필수정보가 아닙니다!</h4>
+        <div>
+        <label>
+            <span>나이</span>
+            {% if user.date_of_birth=='' or user.date_of_birth==null%}
+            <input type="number" name='age' value=0>
+            {% else %}
+            <input type="number" name='age' value={{user.age}}>
+            {% endif %}
+            <span>(나이:0 은 미등록으로 인식) 나이 미입력시 오류발생할 수 있음.</span>
+        </label></div>
+        <div>
+        <label>
+            <span>생일</span>
+            {% if user.date_of_birth=='' or user.date_of_birth==null%}
+            <input type="date" name='birth'>
+            {% else %}
+            <input type="date" name='birth' value={{user.date_of_birth}}>
+            {% endif %}
+        </label></div>
+        <div>
+        <label>
+            <span>주소</span>
+            {% if user.address=='' or user.address==null%}
+            <input type="text" name='addr'>
+            {% else %}
+            <input type="text" name='addr' value={{user.address}}>
+            {% endif %}
+        </label></div>
+        <div>
+        <label>
+            <span>전화번호</span>
+            {% if user.cellphone=='' or user.cellphone==null%}
+            <input type="text" name='phone'>
+            {%else%}
+            <input type="text" name='phone' value={{user.cellphone}}>
+            {%endif%}
+        </label></div>
+        <h4>** 사용자ID,계정유형은 변경불가합니다!</h4>
+        <button id="submit" type='submit' class="btn">변경제출</button>
+    </form>
+        <a id="logout" typer='submit' href="/profile" class="btn">뒤로가기</a>
+    
+</body>
+</html>

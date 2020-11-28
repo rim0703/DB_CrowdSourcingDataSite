@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <form action='/task_sys/add_odt/submit' method="POST">
+        <title>원본 데이터타입 추가하기</title>
+        <h2>원본 데이터타입(ODT) 추가하기</h2>
+        <div>
+            <span>태스크고유ID</span>
+            <input type="text" name='task_id' value="{{task_id}}" readonly>
+        </div>
+        <div>
+            <label>
+            <span>데이터타입이름</span>
+            <input type="text" name='name'>
+            </label>
+        </div>
+        <div>
+            <label>
+            <span>스키마정보</span>
+            <input type="text" style='height:50px' name='schema_info''>
+            </label>
+        </div>
+        <div>
+            <label>
+                <span>스키마 매핑정보</span>
+                <input type="text"  name='mapping_info''>
+            </label>
+        </div>
+
+        <button id="submit" type='submit' class="btn">원본 데이터타입 추가하기</button>
+    </form>
+        <a id="logout" typer='submit' href="/" class="btn">뒤로가기</a>
+    
+</body>
+</html>

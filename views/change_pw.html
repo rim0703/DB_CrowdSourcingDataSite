@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+  <div class="timeline">
+    <div class="followings half">
+        <h2>비밀번호 변경</h2>
+        <div>{{user.username + '님의 등록 정보'}}</div>
+        <p></p>
+        {% if user.role==0 %}
+            <h3>{{'계정유형: 관리자계정'}}</h3>
+        {% endif %}
+        {% if user.role==1 %}
+            <h3>{{'계정유형: 제출자계정'}}</h3>
+        {% endif %}
+        {% if user.role==2 %}
+            <h3>{{'계정유형: 평가자계정'}}</h3>
+        {% endif %}
+        <div>{{'사용자ID: '+ user.id}}</div>
+
+        <form action='/userinfo/password/{{user.id}}?_method=PUT' method="POST">
+            
+            <!--<label>
+            <span>현재 비밀번호</span>
+            <input class="form-control" type="password" name='old_pw'>
+            </label>-->
+        </div>
+            <label>
+            <span>새 비밀번호</span>
+            <input class="form-control" type="password" name='new_pw'>
+            </label>
+        </div>
+          <button id="change" type='submit' class="btn">비밀번호 변경</button>
+        </form>
+
+        <a id="logout" typer='submit' href="/" class="btn">뒤로가기</a>
+    </div>
+  </div>
+</html>

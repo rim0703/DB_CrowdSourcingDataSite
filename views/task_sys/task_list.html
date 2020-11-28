@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>전체 태스크 목록</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link href="..\bootstrap-3.3.2\dist\css\bootstrap.min.css" rel="stylesheet">-->
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800&display=swap" rel="stylesheet">
+  </head>
+<body>
+    <h2>전체 태스크 목록</h2>
+    {%if user.role==0%} 
+    <table stylule="width:100%" border="1">
+      <thead>
+      <tr>
+          <th>태스크ID</th>
+          <th>태스크이름</th>
+          <th>설명</th>
+          <th>태스크테이블이름</th>
+          <th>최소업로드주기</th>
+          <th>진행중/종료</th>
+          <th>테이블스키마</th>
+          <th>원본데이터타입</th>
+          <th>관리기능</th>
+          <ul></ul>
+        </thead>
+      </tr>
+
+          {%for task in tasks%}
+          <tr>
+            <td>{{task.task_id}}</td>
+            <td><a type="button" href="/task_sys/info/{{task.task_id}}" method='GET'>{{task.task_name}}</a></td>
+            <td>{{task.description}}</td>
+            <td>{{task.task_table_name}}</td>
+            <td>{{task.min_upload_freq}}</td>
+            <td>
+                {{'진행중' if task.is_closed==false}}
+                {{'종료' if task.is_closed==true}}</td>
+            <td>{{task.table_schema}}</td>
+            <td><a type="button" href="/task_sys/add_odt/{{task.task_id}}" method='GET'>>추가하기</a>
+            <a type="button" href="/task_sys/{{task.task_id}}" method='GET'>보기</a></td>
+            <td>
+              <form action="/task_sys/delete/{{task.task_id}}{{task.task_table_name}}?_method=DELETE" method="POST">
+                <button id="drop" type='submit' class="btn">태스크삭제</button></form>
+            </td>
+          </tr>
+          {%endfor%}
+      </table>
+    {%else%}
+    <table stylule="width:100%" border="1">
+        <thead>
+        <tr>
+            <th>태스크 고유ID</th>
+            
+            <th>태스크이름</th>
+            <th>설명</th>
+            <th>최소업로드주기</th>
+            <th>진행중/종료</th>
+            <ul></ul>
+          </thead>
+        </tr>
+  
+            {%for task in tasks%}
+            <tr>
+              <td>{{task.task_id}}</td>
+              <td>{{task.task_name}}</td>
+              <td>{{task.description}}</td>
+              <td>{{task.min_upload_freq}}</td>
+              <td>
+                  {%if task.is_closed==false %}
+                  <button><a type="button" href="/task_sys/{{user.id}}/apply_{{task.task_id}}" method='GET'>참여하기</a></button>
+                  {%endif%}
+                  {{'종료' if task.is_closed==true}}</td>
+            </tr>
+            {%endfor%}
+        </table>
+    {%endif%}
+<!--아래 검색기능 (개발중) 
+  <form action="/userinfo/search" method="GET" > 
+    <div class="form-row">
+      <div class="form-group col-9"> 
+        <p></p>
+        <label>조건별 검색</label>
+        <div class="input-group">
+          <select name="searchType" class="custom-select">
+            <option value="id">ID검색</option>
+            <option value="role">역할검색</option>
+            <option value="age">나이검색</option>
+            <option value="sex">성별검색</option>
+            <option value="task" disabled>참여중인 태스크검색(개발중)</option>
+          </select>
+          <input type="text" name="searchText" placeholder="입력하세요">
+          <h6>주의: 역할검색은 '관리자','제출자','평가자' / 성별검색은 '남성','여성' 으로 입력!</h6>
+          <div class="input-group-append">
+            <button class="btn btn-outline-primary" type="submit">search</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </form>-->
+
+  {%if user.role==0 %}
+  <a type="button" href="/task_sys">시스템메인페이지</a>
+  {%endif%}
+  <a type="button" href="/">종료</a>
+</body>
+
+</html>
+<!--
+<script type="text/javascript">alert("접근권한없음! (관리자기능)");location.href="/auth/logout";</script>
+-->
