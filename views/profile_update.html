@@ -2,8 +2,61 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">-->
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <nav class="navbar navbar-expand-sm navbar navbar-dark bg-dark" style="width: auto; background-color:white;">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/main"><b>DB_project_2020</b></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/main"><b>메인화면</b></a>
+            </li>
+            {%if user.role==0 %}
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">내 정보</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/userinfo/stat">회원관리</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/task_sys">태스크관리</a>
+            </li>
+            {%endif%}
+            {%if user.role==1%}
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">내 정보</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">태스크참여</a>
+            </li>
+            {%endif%}
+            {%if user.role==2%}
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">내 정보</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">태스크평가</a>
+            </li>
+            {%endif%}
+        </ul>
+    </nav>
     </head>
     <body>
+        <div class="abcd" style="overflow: hidden;
+    margin: auto;
+    position: absolute; /*relative*/
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 900px;
+    height: 600px;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.20), 0 15px 12px rgba(0, 0, 0, 0.12);">
         <form action='/userinfo/submit/{{user.id}}?_method=PUT' method="POST">
         <!--
         <div class="form-group required control-label"> 
@@ -41,7 +94,7 @@
             {% endif %}
             </label>
         </div>
-        <h4>아래 추가내용은 필수정보가 아닙니다!</h4>
+        <h4 style="color:#082cce">아래 추가내용은 필수정보가 아닙니다!</h4>
         <div>
         <label>
             <span>나이</span>
@@ -50,7 +103,7 @@
             {% else %}
             <input type="number" name='age' value={{user.age}}>
             {% endif %}
-            <span>(나이:0 은 미등록으로 인식) 나이 미입력시 오류발생할 수 있음.</span>
+            <span style="font-size:8px;color:red">(나이:0 은 미등록으로 인식) 나이 미입력시 오류발생할 수 있음.</span>
         </label></div>
         <div>
         <label>
@@ -79,10 +132,10 @@
             <input type="text" name='phone' value={{user.cellphone}}>
             {%endif%}
         </label></div>
-        <h4>** 사용자ID,계정유형은 변경불가합니다!</h4>
-        <button id="submit" type='submit' class="btn">변경제출</button>
+        <h5 style="color:#082cce">** 사용자ID,계정유형은 변경불가합니다!</h5>
+        <button id="submit" type='submit'class="btn btn-primary">변경제출</button>
     </form>
-        <a id="logout" typer='submit' href="/profile" class="btn">뒤로가기</a>
+        <a id="logout" typer='submit' href="/profile" class="btn"style="color:#082cce">뒤로가기></a>
     
 </body>
 </html>
