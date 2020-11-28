@@ -3,14 +3,70 @@
   <head>
     <title>태스크관리시스템</title>
     <meta charset="UTF-8">
- </head>
- <body>
-     <h2>태스크관리시스템</h2>
-     <a id="logout" type='submit' href="/task_sys/add" class="btn"> 1.태스크생성 </a>
-        model->task.js생성 V
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">-->
 
-     <a id="logout" type='submit' href="/task_sys/manage" class="btn"> 2.태스크관리 </a>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <nav class="navbar navbar-expand-sm navbar navbar-dark bg-dark" style="width: auto; background-color:white;">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/main"><b>DB_project_2020</b></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/main"><b>메인화면</b></a>
+            </li>
+            {%if user.role==0 %}
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">내 정보</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/userinfo/stat">회원관리</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/task_sys">태스크관리</a>
+            </li>
+            {%endif%}
+            {%if user.role==1%}
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">내 정보</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">태스크참여</a>
+            </li>
+            {%endif%}
+            {%if user.role==2%}
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">내 정보</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">태스크평가</a>
+            </li>
+            {%endif%}
+        </ul>
+    </nav>
+</head>
 
-     
-     <a id="logout" type='submit' href="/task_sys/stat" class="btn"> 3.태스크통계</a>
- </body>
+<body>
+    <div class=" abcd" style="overflow: hidden;
+    margin: auto;
+    position: absolute; /*relative*/
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 900px;
+    height: 500px;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.20), 0 15px 12px rgba(0, 0, 0, 0.12);">
+
+        <h2 style="margin-top:100px;">태스크관리시스템</h2>
+        <div style="margin-top:10px;"><a id="logout" type='submit' href="/task_sys/add" class="btn btn-primary"> 1.태스크생성 </a></div>
+        <div style="margin-top:10px;"><a id="logout" type='submit' href="/task_sys/manage" class="btn btn-primary"> 2.태스크관리 </a></div>
+        <div style="margin-top:10px;">
+            <a id="logout" type='submit' href="/task_sys/stat" class="btn btn-primary"> 3.태스크통계</a>
+        </div>
+
+        <div style="margin-top:10px;"><a id="logout" typer='submit' href="/" class="btn" style="color:#082cce">뒤로가기></a></div>
+    </div>
+</body>
