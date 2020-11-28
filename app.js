@@ -25,11 +25,7 @@ app.set('view engine','html');
 
 sequelize.sync({force:false})
     .then(()=>{
-<<<<<<< HEAD
         console.log('DB 연결 성공!');
-=======
-        console.log('DB 연결 성공');
->>>>>>> 1a4c1cc376689bff4fc759bac04069fec3f38c09
     })
     .catch((err)=>{
         console.error(err);
