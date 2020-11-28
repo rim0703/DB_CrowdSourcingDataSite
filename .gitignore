@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+# personal_database
+/database
+
 # production
 /build
 

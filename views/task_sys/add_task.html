@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+        <script language="javascript">
+        var oTbl;
+        //Row 추가
+        function insRow() {
+            oTbl = document.getElementById("addTable");
+            var oRow = oTbl.insertRow();
+            oRow.onmouseover=function(){oTbl.clickedRowIndex=this.rowIndex}; //clickedRowIndex - 클릭한 Row의 위치를 확인;
+            var oCell = oRow.insertCell();
+
+            //삽입될 Form Tag
+            var frmTag = `<select name='data_type'>
+                                    <option name='' selected disabled>-- 데이터 유형선택 --</option>
+                                    <option value='string'>문자열</option>
+                                    <option value='int'>정수</option>
+                                    <option value='double'>소수</option>
+                                    <option value='date'>날짜(년,월,일)</option>
+                                    <option value='time'>시간(시,분,초)</option>
+                                    <option value='datetime'>날짜+시간</option>
+                                  </select>
+                                  <input type="text" name="table_schema" style="width:200px; height:20px;">`;
+            frmTag += "<input type=button value='삭제' onClick='removeRow()' style='cursor:hand'>";
+            oCell.innerHTML = frmTag;
+        }
+        //Row 삭제
+        function removeRow() {
+        oTbl.deleteRow(oTbl.clickedRowIndex);
+        }
+
+        function frmCheck()
+        {
+            var frm = document.task;
+            for( var i = 0; i < frm.elements.length; i++ ){
+                if( frm.elements[i].name == "table_schema" )
+                {
+                    if( !frm.elements[i].value ){
+                        alert("텍스트박스에 값을 입력하거나 스키마 빈칸을 삭제 후 제출하세요!");
+                        frm.elements[i].focus();
+                        return false;
+                    }
+                }
+            }
+        }
+        </script>
+    </head>
+    <body>
+        <form name='task' action='/task_sys/add/submit' onsubmit="return frmCheck();" method="POST">
+        <title>새 태스크 추가하기</title>
+        <h2>새 태스크 추가하기</h2>
+        <div>
+            <label>
+            <span>태스크이름</span>
+            <input type="text" name='task_name'>
+            </label>
+        </div>
+        <div>
+            <label>
+            <span>태스크설명</span>
+            <input type="textarea" style='height:50px' name='description'>
+            </label>
+        </div>
+        <div>
+            <label>
+                <span>최소업로드 주기</span>
+                <input type="text"  name='min_upload_freq'>
+                <span>(예:숫자로 입력, 단위(일))</span>
+            </label>
+        </div>
+        <h4>=====태스크 데이터 테이블 생성=====</h4>
+        <div>
+            <label>
+                <span><b>태스크 데이터 테이블 이름 (추천:영문으로 작성)</b></span>
+                <input type="text"  name='task_table_name'>
+            </label>
+        </div>
+       
+                        <!--SelectOption+TextBox 스키마정보 받기
+                <span>태이블 데이터 테이블 스키마</span>
+                <input type="textarea" style='height:50px' name='table_schema'>-->
+
+                <table width="400" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td colspan="2" align="left" bgcolor="#FFFFFF">
+                        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                          <tr>
+                           <td colspan="5" bgcolor="#FFFFFF" height="25" align="left">
+                            <font color="#FF0000">*</font><b>태이블 데이터 테이블 스키마를 추가하세요! (추천:영문으로 작성)</b>
+                            <p>(1개이상의 스키마를 정의하세요!)</p>
+                            <input name="addButton" type="button" style="cursor:hand" onClick="insRow()" value="추가"></td>
+                           
+                           
+                          </tr>
+                          <tr>
+                           <td height="25">
+                             <table id="addTable" width="700" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" border="0">
+                              <tr>
+                                <tr><select name='data_type'>
+                                    <option name='' selected disabled>-- 데이터 유형선택 --</option>
+                                    <option value='string'>문자열</option>
+                                    <option value='int'>정수</option>
+                                    <option value='double'>소수</option>
+                                    <option value='date'>날짜(년,월,일)</option>
+                                    <option value='time'>시간(시,분,초)</option>
+                                    <option value='datetime'>날짜+시간</option>
+                                  </select>
+                                  <input type="text" name="table_schema" style="width:200px; height:20px;">
+                                  </tr>
+                                <td align="left"></td>
+                              </tr>
+                            </table></td>
+                          </tr>
+                         </table>
+                        </td>
+                     </tr>
+                   </table>
+
+        <h4>=====기본 원본 데이터 타입 설정=====</h4>
+        <div>
+            <label>
+                <span><b>원본 데이터 타입 이름</b></span>
+                <input type="text"  name='odt_name'>
+            </label>
+        </div>
+        <div>
+            <label>
+            <span>스키마정보</span>
+            <input type="text" style='height:50px' name='schema_info''>
+            </label>
+        </div>
+        <div>
+            <label>
+                <span>스키마 매핑정보</span>
+                <input type="text"  name='mapping_info''>
+            </label>
+        </div>
+
+
+        <input id="submit" type='submit' class="btn" value='새 태스크 추가하기'></input>
+    </form>
+        <a id="logout" typer='submit' href="/task_sys/stat" class="btn">뒤로가기</a>
+
+</body>
+</html>

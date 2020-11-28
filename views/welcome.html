@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">-->
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <nav class="navbar navbar-expand-sm bg-primary navbar-dark" style="width: auto;">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="/main"><b>DB_project_2020</b></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/main"><b>메인화면</b></a>
+            </li>
+            {%if user.role==0 %}
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">내 정보</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/userinfo/stat">회원관리</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/task_sys">태스크관리</a>
+            </li>
+            {%endif%}
+            {%if user.role==1%}
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">내 정보</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">태스크참여</a>
+            </li>
+            {%endif%}
+            {%if user.role==2%}
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">내 정보</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">태스크평가</a>
+            </li>
+            {%endif%}
+          </ul>
+    </nav>
+
+</head>
+<body>
+
+{%block contents%}
+<title>환영합니다!</title>
+{% if user and user.id %}
+        <h2 style="text-align: center; margin-top: 100px;">{{'안녕하세요! ' + user.username + '님'}}</h2>
+        <center>
+        <a id="my-profile" type='submit' href="/profile" class="btn btn-primary" >내 정보</a>
+        <a id="logout" type='submit' href="/auth/logout" class="btn btn-primary">로그아웃</a>
+    {% if user and user.id and user.role=='0'%}
+        <p><h5>[관리자기능]</h5></p>
+        <a id="user_list" href="/userinfo/stat" class="btn btn-primary">회원관리시스템</a>
+        <a id="task_sys" href="/task_sys" class="btn btn-primary">태스크관리시스템</a>
+    {% endif %}
+    {% if user and user.id and user.role=='1'%} <!--제출자ID로 로그인-->
+        <p><h5>[제출자기능]</h5></p>
+        <a id="task_sys" href="/task_sys/stat" class="btn btn-primary">태스크참여</a>
+    {%endif%}
+    {% if user and user.id and user.role=='2'%} <!--평가자ID로 로그인-->
+        <p><h5>[평가자기능]</h5></p>
+        <a id="task_sys" href="/task_sys/stat" class="btn btn-primary">태스크참여</a>
+    {%endif%}</center>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src = "/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+{%else%}
+<script type="text/javascript">alert("접근권한없음! (관리자기능)");location.href="/auth/logout";</script>
+{%endif%}
+{%endblock%}
