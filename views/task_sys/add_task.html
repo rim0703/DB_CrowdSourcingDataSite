@@ -63,8 +63,8 @@
                                     <option value='time'>시간(시,분,초)</option>
                                     <option value='datetime'>날짜+시간</option>
                                   </select>
-                                  <input type="text" name="table_schema" style="width:200px; height:20px;">`;
-            frmTag += "<input type=button value='삭제' onClick='removeRow()' style='cursor:hand'>";
+                                  <input type="text" name="table_schema">`;
+            frmTag += "<input type='button' style='padding: .075rem .175rem;' class='btn btn-danger' value='삭제' onClick='removeRow()' style='cursor:hand'>";
             oCell.innerHTML = frmTag;
         }
         //Row 삭제
@@ -104,53 +104,53 @@
             <form name='task' action='/task_sys/add/submit' onsubmit="return frmCheck();" method="POST">
                 <title>새 태스크 추가하기</title>
                 <h2 style="margin-top:20px;">새 태스크 추가하기</h2>
-                <div>
+                <table style="margin:auto;">
                     <label>
-                        <span>태스크이름</span>
-                        <input type="text" name='task_name'>
+                        <td><span>태스크이름</span></td>
+                        <td><input type="text" size="35" name='task_name'></td>
                     </label>
-                </div>
-                <div>
+                <tr></tr>
                     <label>
-                        <span>태스크설명</span>
-                        <input type="textarea" name='description'>
+                        <td><span>태스크설명</span></td>
+                        <td><textarea type="textarea" cols="38" rows="3" name='description'></textarea></td>
                     </label>
-                </div>
-                <div>
+                <tr>
                     <label>
-                        <span>최소업로드 주기</span>
-                        <input type="text" name='min_upload_freq'>
-                        <span style="color:darkgrey">(예:숫자로 입력, 단위(일))</span>
+                        <td><span>최소업로드 주기</span></td>
+                        <td><input type="text" size="35" name='min_upload_freq'></td>
+                        <tr></tr>
+                        <td></td>
+                        <td><span style="color:darkgrey">(예:숫자로 입력, 단위(일))</span></td>
                     </label>
-                </div>
+                </tr></table>
                 <HR SIZE=3>
-                <h5 style="color:#082cce">태스크 데이터 테이블 생성</h5>
+                <table style="margin: auto;"><h5 style="color:#082cce"><b>태스크 데이터 테이블 생성</b></h5>
                 <div>
                     <label>
-                        <span><b>태스크 데이터 테이블 이름 (추천:영문으로 작성)</b></span>
-                        <input type="text" name='task_table_name'>
+                        <td><span><b>태스크 데이터 테이블 이름</b></span></td>
+                        <td><input type="text" name='task_table_name'></td>
                     </label>
-                </div>
+                </div></table>
 
                 <!--SelectOption+TextBox 스키마정보 받기
         <span>태이블 데이터 테이블 스키마</span>
         <input type="textarea" style='height:50px' name='table_schema'>-->
 
-                <table width="400" border="0" cellspacing="0" cellpadding="0" align="center" ;>
+                <table width="200"  cellspacing="0" cellpadding="0" align="center" style="margin: auto;">
                     <tr>
-                        <td colspan="2" align="left" bgcolor="#FFFFFF">
+                        <td colspan="2" bgcolor="#FFFFFF">
                             <table width="100%" border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td colspan="5" bgcolor="#FFFFFF" height="25" align="center">
-                                        <font color="#FF0000">*</font><b>태이블 데이터 테이블 스키마를 추가하세요! (추천:영문으로 작성)</b><p style="color:darkgrey">(1개이상의 스키마를 정의하세요!)</p>
-                                        <input name="addButton" type="button" style="cursor:hand" onClick="insRow()"  class="btn btn-primary" value="추가">
+                                        <tr><font color="#FF0000">*</font><b>태스크 데이터 테이블 스키마를 추가하세요!</b>
+                                        <input name="addButton" type="button" style="cursor:hand; padding: .075rem .175rem;" onClick="insRow()"  class="btn btn-primary"  value="추가"></tr>
                                     </td>
 
 
                                 </tr>
                                 <tr>
                                     <td height="25">
-                                        <table id="addTable" width="700" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" border="0">
+                                        <table id="addTable" width="700" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF"  style="margin: auto;">
                                             <tr>
                                             <tr>
                                                 <select name='data_type'>
@@ -162,9 +162,9 @@
                                                     <option value='time'>시간(시,분,초)</option>
                                                     <option value='datetime'>날짜+시간</option>
                                                 </select>
-                                                <input type="text" name="table_schema" style="width:200px; height:20px;">
+                                                <input type="text" name="table_schema" >
                                             </tr>
-                                            <td align="left"></td>
+                                            <td></td>
                                 </tr>
                             </table>
                         </td>
@@ -173,31 +173,32 @@
                 </td>
                 </tr>
                 </table>
+            
                 <HR SIZE=3>
-                <h5 style="color:#082cce">기본 원본 데이터 타입 설정</h5>
-                <div>
+                <h5 style="color:#082cce"><b>기본 원본 데이터 타입 설정</b></h5>
+                <table style="margin: auto;">
                     <label>
-                        <span><b>원본 데이터 타입 이름</b></span>
-                        <input type="text" name='odt_name'>
+                        <td><span >원본 데이터 타입 이름</span></td>
+                        <td><input size="35" type="text" name='odt_name'></td>
                     </label>
-                </div>
-                <div>
+                <tr></tr>
                     <label>
-                        <span>스키마정보</span>
-                        <input type="text" style='height:50px' name='schema_info' '>
+                        <td><span>스키마정보</span></td>
+                        <td><textarea type="text" cols="38" rows="3" style='height:50px' name='schema_info' '></textarea></td>
                     </label>
-                </div>
-                <div>
+                <tr></tr>
                     <label>
-                        <span>스키마 매핑정보</span>
-                        <input type="text" name='mapping_info' '>
-                    </label>
-                </div>
+                        <td><span>스키마 매핑정보</span></td>
+                        <td><textarea type="text" cols="38" rows="3" name='mapping_info' '></textarea></td>
+                    </label></table>
 
-
+                <p></p>
                 <input id="submit" type='submit' class="btn btn-primary" value='새 태스크 추가하기'></input>
+                <a type='submit' href="/task_sys" class="btn btn-secondary" style="margin-left: 20px;">뒤로가기</a>
             </form>
-            <a id="logout" typer='submit' href="/task_sys" class="btn" style="color:#082cce; margin-top:10px;">뒤로가기></a>
+            <p></p>
+            <br>
+            
         </div>
 </body>
 </html>
