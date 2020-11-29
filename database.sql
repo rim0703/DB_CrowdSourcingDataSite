@@ -156,5 +156,5 @@ CREATE TABLE IF NOT EXISTS apply(
 	user_id VARCHAR(255) NOT NULL,
     task_id INTEGER NOT NULL,
     task_name VARCHAR(255) NOT NULL,
-    is_approved BOOLEAN DEFAULT FALSE
+    is_approved BOOLEAN DEFAULT NULL,
 );
