@@ -55,23 +55,23 @@
     left: 0;
     right: 0;
     bottom: 0;
-    width: 900px;
+    width: 1200px;
     text-align: center;
     background-color: white;
     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.20), 0 15px 12px rgba(0, 0, 0, 0.12);">
         <h2>전체 태스크 목록</h2>
         {%if user.role==0%}
-        <table stylule="width:100%" border="1" align="center">
+        <table class="table table-hover" style="width:100%" align="center">
             <thead>
                 <tr>
-                    <th>태스크ID</th>
+                    <th>ID</th>
                     <th>태스크이름</th>
                     <th>설명</th>
-                    <th>태스크테이블이름</th>
                     <th>최소업로드주기</th>
-                    <th>진행중/종료</th>
+                    <th>테이블이름</th>
                     <th>테이블스키마</th>
                     <th>원본데이터타입</th>
+                    <th>현황</th>
                     <th>관리기능</th>
                     <ul></ul>
             </thead>
@@ -82,21 +82,25 @@
                 <td>{{task.task_id}}</td>
                 <td><a type="button" href="/task_sys/info/{{task.task_id}}" method='GET'>{{task.task_name}}</a></td>
                 <td>{{task.description}}</td>
-                <td>{{task.task_table_name}}</td>
+                
                 <td>{{task.min_upload_freq}}</td>
+                <td>{{task.task_table_name}}</td>
+                <td>{{task.table_schema}}</td>
+                <td>
+                    <a type="button" class="btn btn-primary" style='padding: .075rem .175rem;' href="/task_sys/add_odt/{{task.task_id}}" method='GET'>추가</a>
+                </td>                
                 <td>
                     {{'진행중' if task.is_closed==false}}
                     {{'종료' if task.is_closed==true}}
                 </td>
-                <td>{{task.table_schema}}</td>
-                <td>
-                    <a type="button" href="/task_sys/add_odt/{{task.task_id}}" method='GET'>추가하기></a>
-                    <a type="button" href="/task_sys/{{task.task_id}}" method='GET'>보기</a>
-                </td>
                 <td>
                     <form action="/task_sys/delete/{{task.task_id}}{{task.task_table_name}}?_method=DELETE" method="POST">
-                        <button id="drop" type='submit' class="btn">태스크삭제</button>
+                        <a id="drop" type='submit' class="badge badge-danger">삭제</a>
                     </form>
+                    {%if task.is_closed==false%}
+
+                    <a class="badge badge-secondary" href="/task_sys/manage/close/{{task.task_id}}" method='GET' >종료</a>
+                    {%endif%}
                 </td>
             </tr>
             {%endfor%}

@@ -310,6 +310,25 @@ router.get('/manage/disapprove/:apply_id',isLoggedIn,async(req,res,next)=>{
         })
 })
 
+//추가구현: 태스크 종료하기
+router.get('/manage/close/:task_id',isLoggedIn,async(req,res,next)=>{
+    await Task.update({
+    is_closed:true
+    },{
+        where: {task_id:req.params.task_id}
+    })
+    .then(result=>{
+        console.log("태스크참여를 종료하셨습니다!");
+        res.send(`<script type="text/javascript">alert("태스크 참여를 종료하셨습니다!");history.back();location.reload(true);</script>`);
+    })
+    .catch(err=>{
+        console.error(err);
+        res.send(`<script type="text/javascript">alert("태스크 종료 에러!");history.back();</script>`)
+    })
+})
+
+
+
 /*
     태스크 참여자 기능 구현
 */
