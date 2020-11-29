@@ -84,7 +84,7 @@
     <script src="/user_list.js"></script>-->
 </div>
   {%else%}
-<script type="text/javascript">alert("접근권한없음! (관리자기능)");location.href="/auth/logout";</script>
+<script type="text/javascript">alert("접근권한없음! (관리자기능)");history.back();</script>
   {%endif%}
 
 {%endblock%}

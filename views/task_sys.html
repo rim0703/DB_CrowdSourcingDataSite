@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿{%if user.role==0%}
+<!DOCTYPE html>
 <html>
 <head>
     <title>태스크관리시스템</title>
@@ -70,3 +71,6 @@
         <div style="margin-top:10px;"><a id="logout" typer='submit' href="/" class="btn" style="color:#082cce">뒤로가기></a></div>
     </div>
 </body>
+{%else%}
+<script type="text/javascript">alert("접근권한없음! (관리자기능)");history.back();</script>
+{%endif%}

@@ -123,7 +123,7 @@
             {%for task in tasks%}
             <tr>
                 <td>{{task.task_id}}</td>
-                <td>{{task.task_name}}</td>
+                <td><a type="button" href="/task_sys/info/{{task.task_id}}" method='GET'>{{task.task_name}}</a></td>
                 <td>{{task.description}}</td>
                 <td>{{task.min_upload_freq}}</td>
                 <td>{%for apply in task.Applies%}

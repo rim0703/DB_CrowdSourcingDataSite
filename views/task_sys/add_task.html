@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿{%if user.role==0%}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -202,3 +203,6 @@
         </div>
 </body>
 </html>
+{%else%}
+<script type="text/javascript">alert("접근권한없음! (관리자기능)");history.back();</script>
+{%endif%}
