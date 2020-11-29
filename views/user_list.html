@@ -3,79 +3,88 @@
 {% block contents %}
 <title>전체 가입자 목록</title>
   {% if user.role==0 %}
-    <div class="mx-auto">
-      <a id="logout" typer='submit' href="/" class="btn" style="color:#082cce;">뒤로가기></a>
-      <h2 style="text-align: center;"><b>전체 가입자 목록</b></h2>
-      <hr>
-        <!--아래: 검색기능 (개발중)-->
-        <center><form class="form-inline text-center" style='margin: 0 auto; width: 500px;' action="/userinfo/search" method="GET" > 
-          <div> 
-            <p></p>
-            <label><h5><b>조건별 검색</b></h5></label>
-            <div class="input-group">
-              <label><select name="searchType" class="custom-select">
-                <option value="id">ID검색</option>
-                <option value="role">역할검색</option>
-                <option value="age">나이검색</option>
-                <option value="sex">성별검색</option>
-                <option value="task">참여중인 태스크검색</option>
-              </select></label>
-              <label><input class='input-group-text' type="text" name="searchText" placeholder="입력하세요"></label>
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">검색</button>
-              </div>
+<div class="mx-auto">
+    <a id="logout" typer='submit' href="/" class="btn" style="color:#082cce;">뒤로가기></a>
+    <h2 style="text-align: center; "><b>전체 가입자 목록</b></h2>
+
+    <hr>
+    <!--아래: 검색기능 (개발중)-->
+    <center>
+        <form class="form-inline text-center" style='margin: 0 auto; width: 500px;' action="/userinfo/search" method="GET">
+            <div>
+                <p></p>
+                <label><h5><b>조건별 검색</b></h5></label>
+                <div class="input-group">
+                    <label>
+                        <select name="searchType" class="custom-select">
+                            <option value="id">ID검색</option>
+                            <option value="role">역할검색</option>
+                            <option value="age">나이검색</option>
+                            <option value="sex">성별검색</option>
+                            <option value="task">참여중인 태스크검색</option>
+                        </select>
+                    </label>
+                    <label><input class='input-group-text' type="text" name="searchText" placeholder="입력하세요"></label>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">검색</button>
+                    </div>
+                </div>
             </div>
-          </div>
-      </form></center>
-      <center><p>주의: 역할검색은 '관리자','제출자','평가자' / 성별검색은 '남자','여자' 로 입력!</p></center>
+        </form>
+    </center>
+    <center><p>주의: 역할검색은 '관리자','제출자','평가자' / 성별검색은 '남자','여자' 로 입력!</p></center>
 
-<hr>
+    <hr>
 
 
-      <table class="table table-hover" style='width:60%;margin: 0 auto;'>
+    <table class="table table-hover" style='width:60%;margin: 0 auto;'>
         <thead>
-        <tr style="text-align: center;">
-            <th scope="col">사용자ID</th> 
-            <th scope="col">이메일</th>
-            <th scope="col">이름</th>
-            <th scope="col">회원유형</th>
-            <th scope="col">성별</th>
-            <th scope="col">나이</th>
-            <th scope="col">생일</th>
-            <th scope="col">주소</th>
-            <th scope="col">전화번호</th>
-            <th scope="col">평가점수</th>
-            <th scope="col">가입일</th>
-            <ul></ul>
-          </thead>
+            <tr style="text-align: center;">
+                <th scope="col">사용자ID</th>
+                <th scope="col">이메일</th>
+                <th scope="col">이름</th>
+                <th scope="col">회원유형</th>
+                <th scope="col">성별</th>
+                <th scope="col">나이</th>
+                <th scope="col">생일</th>
+                <th scope="col">주소</th>
+                <th scope="col">전화번호</th>
+                <th scope="col">평가점수</th>
+                <th scope="col">가입일</th>
+                <ul></ul>
+        </thead>
         </tr>
 
-            {%for user in users%}
-            <tr style="text-align: center;">
-              <td>
+        {%for user in users%}
+        <tr style="text-align: center;">
+            <td>
                 <input id="my-id" type="hidden" value="{{user.id}}">
-                  <a type='submit' name='id' class="badge badge-light" style="font-size: 100%;" href='/userinfo/stat/{{user.id}}' method='GET'>{{user.id}}</a>
-              </td>
-              <td>{{user.email}}</td>
-              <td>{{user.username}}</td>
-              <td>{{'관리자' if user.role==0}}
+                <a type='submit' name='id' class="badge badge-light" style="font-size: 100%;" href='/userinfo/stat/{{user.id}}' method='GET'>{{user.id}}</a>
+            </td>
+            <td>{{user.email}}</td>
+            <td>{{user.username}}</td>
+            <td>
+                {{'관리자' if user.role==0}}
                 {{'제출자' if user.role==1}}
-                {{'평가자' if user.role==2}}</td>
-              <td>{{user.sex}}</td>
-              <td>{{user.age}}</td>
-              <td>{{user.date_of_birth}}</td>
-              <td>{{user.address}}</td>
-              <td>{{user.cellphone}}</td>
-              <td>{{user.score}}</td>
-              <td>{{user.created_at}}</td>
-                
-            </tr>
-            {%endfor%}
-        </table>
+                {{'평가자' if user.role==2}}
+            </td>
+            <td>{{user.sex}}</td>
+            <td>{{user.age}}</td>
+            <td>{{user.date_of_birth}}</td>
+            <td>{{user.address}}</td>
+            <td>{{user.cellphone}}</td>
+            <td>{{user.score}}</td>
+            <td>{{user.created_at}}</td>
+
+        </tr>
+        {%endfor%}
+
+    </table>
     <!--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/user_list.js"></script>-->
-  </div>
+</div>
   {%else%}
-  <script type="text/javascript">alert("접근권한없음! (관리자기능)");location.href="/auth/logout";</script>
+<script type="text/javascript">alert("접근권한없음! (관리자기능)");location.href="/auth/logout";</script>
   {%endif%}
+
 {%endblock%}

@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">-->
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -43,7 +43,9 @@
             {%endif%}
         </ul>
     </nav>
-    </head>
+    <title>비밀번호 변경</title>
+</head>
+
 <body>
     <div class"abcd" style="overflow: hidden;
     margin: auto;
@@ -57,36 +59,39 @@
     text-align: center;
     background-color: white;
     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.20), 0 15px 12px rgba(0, 0, 0, 0.12);">
-  <div class="timeline">
-    <div class="followings half">
-        <h2>비밀번호 변경</h2>
-        <div>{{user.username + '님의 등록 정보'}}</div>
-        <p></p>
-        {% if user.role==0 %}
-            <h3>{{'계정유형: 관리자계정'}}</h3>
-        {% endif %}
-        {% if user.role==1 %}
-            <h3>{{'계정유형: 제출자계정'}}</h3>
-        {% endif %}
-        {% if user.role==2 %}
-            <h3>{{'계정유형: 평가자계정'}}</h3>
-        {% endif %}
-        <div>{{'사용자ID: '+ user.id}}</div>
 
-        <form action='/userinfo/password/{{user.id}}?_method=PUT' method="POST">
-            
-            <!--<label>
-            <span>현재 비밀번호</span>
-            <input class="form-control" type="password" name='old_pw'>
-            </label>-->
-        </div>
+        <div class="timeline" style="background-color:white; ">
+            <div class="followings half">
+
+                <h3 style="margin-top:100px;">비밀번호 변경</h3>
+                <div>{{user.username + '님의 등록 정보'}}</div>
+                <p></p>
+                {% if user.role==0 %}
+                <h5>{{'계정유형: 관리자계정'}}</h5>
+                {% endif %}
+                {% if user.role==1 %}
+                <h5>{{'계정유형: 제출자계정'}}</h5>
+                {% endif %}
+                {% if user.role==2 %}
+                <h5>{{'계정유형: 평가자계정'}}</h5>
+                {% endif %}
+                <div>{{'사용자ID: '+ user.id}}</div>
+
+                <form action='/userinfo/password/{{user.id}}?_method=PUT' method="POST">
+
+                    <!--<label>
+                <span>현재 비밀번호</span>
+                <input class="form-control" type="password" name='old_pw'>
+                </label>-->
+            </div>
             <label>
-            <span>새 비밀번호</span>
-            <input class="form-control" type="password" name='new_pw'>
+                <span>새 비밀번호:</span>
+                <input class="form-control" type="password" name='new_pw'>
             </label>
         </div>
-          <button id="change" type='submit' class="btn">비밀번호 변경</button>
+        <button id="change" type='submit' class="btn btn-primary">비밀번호 변경</button>
         </form>
+
         <a id="logout" typer='submit' href="/" class="btn" style="color:#082cce">뒤로가기></a>
     </div>
 </body>
