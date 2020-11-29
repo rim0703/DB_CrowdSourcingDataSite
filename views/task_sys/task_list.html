@@ -101,7 +101,54 @@
             </tr>
             {%endfor%}
         </table>
-        {%else%}
+        {%endif%}
+        {%if user.role==1%}
+        <span class="badge badge-primary">V</span>신청제출
+        <span class="badge badge-success">V</span>승인받음
+        <span class="badge badge-secondary">X</span>승인거절
+
+        <table class="table table-hover" style="width: 100%" align="center">
+            <thead>
+                <tr>
+                    <th>ID#</th>
+                    <th>태스크이름</th>
+                    <th style="width: 400px;">설명</th>
+                    <th>최소업로드주기</th>
+                    <th>승인현황</th>
+                    <th>진행중/종료</th>
+                
+            </thead>
+            </tr>
+
+            {%for task in tasks%}
+            <tr>
+                <td>{{task.task_id}}</td>
+                <td>{{task.task_name}}</td>
+                <td>{{task.description}}</td>
+                <td>{{task.min_upload_freq}}</td>
+                <td>{%for apply in task.Applies%}
+                        {%if apply.user_id==user.id and apply.is_approved==NULL%}
+                        <span class="badge badge-primary">V</span>
+                        {%endif%}
+                        {%if apply.user_id==user.id and apply.is_approved==true%}
+                        <span class="badge badge-success">V</span>
+                        {%endif%}
+                        {%if apply.user_id==user.id and apply.is_approved==false%}
+                        <span class="badge badge-secondary">X</span>
+                        {%endif%}
+                    {%endfor%}</td>
+                <td>{%if task.is_closed==false%}
+                    <a type="button" class="btn btn-primary btn-sm" href="/task_sys/{{user.id}}/apply_{{task.task_id}}" method='GET'>참여하기</a>
+                    {%endif%}
+                    {{'종료' if task.is_closed==true}}</td>
+                    
+                
+            </tr>
+            {%endfor%}
+        </table>
+
+        {%endif%}
+        {%if user.role==2%}
         <table stylule="width:100%" border="1" align="center">
             <thead>
                 <tr>
@@ -130,6 +177,8 @@
             </tr>
             {%endfor%}
         </table>
+
+
         {%endif%}
         <!--아래 검색기능 (개발중)
           <form action="/userinfo/search" method="GET" >

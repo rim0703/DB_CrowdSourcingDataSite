@@ -138,7 +138,20 @@ router.post('/add/submit',async(req,res,next)=>{
 });
 //태스크리스트
 router.get('/stat',isLoggedIn,async(req,res,next)=>{
-    var tasks=await Task.findAll();
+    var tasks=await Task.findAll({
+        include:[
+            {
+                model:Apply,
+                required:false,
+                attributes:['user_id','is_approved']
+            }
+        ]
+    });
+    console.log(tasks);
+    console.log(tasks[0].Applies);
+    //console.log(tasks[0].Applies.user_id);
+    //console.log(tasks[0].Applies[0].user_id);
+    //console.log(tasks[0].Apply.user_id);
     res.render('./task_sys/task_list',{tasks});
 })
 //태스크 삭제하기 (태스크ID 뒤에서부터 재사용가능)
@@ -242,7 +255,7 @@ router.get('/manage/:apply_id',isLoggedIn,async(req,res,next)=>{
     })
     //console.log(check.is_approved);
     //console.log(check.is_approved=='');
-    if(check.is_approved==''){
+    if(check.is_approved==null||check.is_approved==false){
         await Apply.update({
         is_approved:true
         },{
@@ -301,7 +314,7 @@ router.get('/:user_id/apply_:task_id',isLoggedIn,async(req,res,next)=>{
                 user_id:user_id,
                 task_id:task_id,
                 task_name:task_name.task_name,
-                is_approved:false,
+                is_approved:null,
             });
             res.send(`<script type="text/javascript">alert("참여신청하셨습니다! 관리자의 승인을 기다리세요!");history.back();</script>`);
         }

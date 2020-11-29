@@ -59,6 +59,9 @@
     background-color: white;
     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.20), 0 15px 12px rgba(0, 0, 0, 0.12);">
         <h2>승인 대기중인 태스크</h2>
+        <span class="badge badge-primary">-</span>승인대기중
+        <span class="badge badge-success">V</span>승인허가
+        <span class="badge badge-secondary">X</span>승인거절
         {%if user.role==0%}
         <table stylule="width:100%" border="1" align="center">
             <thead>
@@ -68,19 +71,29 @@
                     <th>태스크ID</th>
                     <th>태스크이름</th>
                     <th>평가점수</th>
-                    <th>승인(미승인시 자동거절)</th>
+                    <th>승인현황</th>
+                    <th>승인</th>
                     <ul></ul>
             </thead>
             </tr>
 
             {%for apply in applys %}
-            {%if apply.is_approved==''%}
+            {%if apply.is_approved==NULL or apply.is_approved==false%}
             <tr>
                 <td>{{apply.apply_id}}</td>
                 <td>{{apply.user_id}}</td>
                 <td>{{apply.task_id}}</td>
                 <td>{{apply.task_name}}</td>
                 <td>{{apply.User.score}}</td>
+                <td>{%if apply.is_approved==NULL%}
+                    <span class="badge badge-primary">-</span>
+                    {%endif%}
+                    {%if apply.is_approved==true%}
+                    <span class="badge badge-success">V</span>
+                    {%endif%}
+                    {%if apply.is_approved==false%}
+                    <span class="badge badge-secondary">X</span>
+                    {%endif%}</td>
                 <td>
                     <a type="button" href="/task_sys/manage/{{apply.apply_id}}" method='get'>참여허가</a>
                 </td>

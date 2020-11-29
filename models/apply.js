@@ -41,5 +41,9 @@ module.exports=class Apply extends Sequelize.Model{
             foreignKey:'user_id',
             targetKey:'id'
         })
+        db.Apply.belongsTo(db.Task,{
+            foreignKey:'task_id',
+            targetKey:'task_id',
+        })
     }
 }

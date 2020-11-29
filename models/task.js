@@ -52,6 +52,10 @@ module.exports=class Task extends Sequelize.Model{
         db.Task.hasMany(db.ODT,{
             foreignKey:'t_id',
             sourceKey:'task_id'
+        });
+        db.Task.hasMany(db.Apply,{
+            foreignKey:'task_id',
+            sourceKey:'task_id'
         })
     }
 }
