@@ -253,6 +253,7 @@ router.get('/manage/:apply_id',isLoggedIn,async(req,res,next)=>{
     var check=await Apply.findOne({
         where:{apply_id:req.params.apply_id}
     })
+    console.log(req.params);
     //console.log(check.is_approved);
     //console.log(check.is_approved=='');
     if(check.is_approved==null||check.is_approved==false){
@@ -288,7 +289,26 @@ router.get('/manage/:apply_id',isLoggedIn,async(req,res,next)=>{
 
 
 })
-
+//태스크 대기중 거절
+router.get('/manage/disapprove/:apply_id',isLoggedIn,async(req,res,next)=>{
+    var check=await Apply.findOne({
+        where:{apply_id:req.params.apply_id}
+    })
+    console.log(req.params);
+        await Apply.update({
+        is_approved:false
+        },{
+            where: {apply_id:req.params.apply_id}
+        })
+        .then(result=>{
+            console.log("참여자의 태스크 참여를 거절하셨습니다!");
+            res.send(`<script type="text/javascript">alert("참여자의 태스크 참여를 거절하셨습니다!");history.back();location.reload(true);</script>`);
+        })
+        .catch(err=>{
+            console.error(err);
+            res.send(`<script type="text/javascript">alert("허가권한 취소 에러!");history.back();</script>`)
+        })
+})
 
 /*
     태스크 참여자 기능 구현
