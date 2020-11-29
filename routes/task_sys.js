@@ -224,17 +224,24 @@ router.get('/info/:task_id',isLoggedIn,async(req,res,next)=>{
 })
 //태스크 참여자 승인/거절 페이지
 router.get('/manage',isLoggedIn,async(req,res,next)=>{
-    console.log('페이지 전환 라우터');
-    var applys=await Apply.findAll();
-    var user_score=await User.findOne()
+    //console.log('페이지 전환 라우터');
+    //User평가점수 반영하기
+    var applys=await Apply.findAll({
+    include:[
+        {
+            model:User,
+            required:false,
+            attributes:['id','score']
+        }
+    ]});
     res.render('./task_sys/task_manage',{applys});
 })
 router.get('/manage/:apply_id',isLoggedIn,async(req,res,next)=>{
     var check=await Apply.findOne({
         where:{apply_id:req.params.apply_id}
     })
-    console.log(check.is_approved);
-    console.log(check.is_approved=='');
+    //console.log(check.is_approved);
+    //console.log(check.is_approved=='');
     if(check.is_approved==''){
         await Apply.update({
         is_approved:true
