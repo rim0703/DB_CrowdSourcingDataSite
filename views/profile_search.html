@@ -1,29 +1,80 @@
 ﻿{%if user.role==0%}
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>회원정보</title>
-        <meta charset="UTF-8">
-    </head>
-  <div class="timeline">
-    <div class="followings half">
-        {%for user in users%}
+<head>
+    <title>회원정보</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <nav class="navbar navbar-expand-sm navbar navbar-dark bg-dark" style="width: auto; background-color:white;">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/main"><b>DB_project_2020</b></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/main"><b>메인화면</b></a>
+            </li>
+            {%if user.role==0 %}
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">내 정보</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/userinfo/stat">회원관리</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/task_sys">태스크관리</a>
+            </li>
+            {%endif%}
+            {%if user.role==1%}
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">내 정보</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">태스크참여</a>
+            </li>
+            {%endif%}
+            {%if user.role==2%}
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">내 정보</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">태스크평가</a>
+            </li>
+            {%endif%}
+        </ul>
+    </nav>
+</head>
+<div class="abcd" style="overflow: hidden;
+    margin: auto;
+    position: relative; /*relative*/
+    margin-top:20px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 900px;
+    height: 600px;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.20), 0 15px 12px rgba(0, 0, 0, 0.12);">
+    <div class="timeline">
+        <div class="followings half">
+            {%for user in users%}
             <div>{{user.username + '님의 등록 정보'}}</div>
             <p></p>
             {% if user.role==0 %}
-                <h3>{{'계정유형: 관리자계정'}}</h3>
+            <h3>{{'계정유형: 관리자계정'}}</h3>
             {% endif %}
             {% if user.role==1 %}
-                <h3>{{'계정유형: 제출자계정'}}</h3>
+            <h3>{{'계정유형: 제출자계정'}}</h3>
             {% endif %}
             {% if user.role==2 %}
-                <h3>{{'계정유형: 평가자계정'}}</h3>
+            <h3>{{'계정유형: 평가자계정'}}</h3>
             {% endif %}
             <div>{{'사용자ID: '+ user.id}}</div>
             <div>{{'이메일: '+ user.email}}</div>
             <div>{{'이름: '+ user.username}}</div>
             <div>{{'성별: '+ user.sex}}</div>
-            <h4>==========추가정보(필수사항은 아닙니다)==========</h4>
+
+            <h5>====추가정보(필수사항은 아닙니다)====</h5>
             {% if user.age==null or user.age==0 %}
             <div>{{'나이: 미등록'}}</div>
             {%else%}
@@ -60,27 +111,29 @@
             <button id="drop" type='submit' class="btn">회원탈퇴</button>-->
             </form>
             {%endif%}
-        {%endfor%}
-        <h2>참여한 태스크 목록</h2>
-        <table stylule="width:100%" border="1">
-            <tr>
-              <th>태스크ID</th> 
-              <th>태스크이름</th>
-              <th>평균점수</th>
-              <th>승인여부</th>
-            </tr>
-            {%for apply in applys%}
-            <tr>
-              <th>{{apply.task_id}}</th>
-              <th>{{apply.task_name}}</th>
-              <th></th>
-              <th>{{apply.is_approved}}</th>
-            </tr>
             {%endfor%}
-          </table>
-        <a id="logout" typer='submit' href="/" class="btn" style="color:#082cce">뒤로가기></a>
+            <HR SIZE=3>
+            <h3>참여한 태스크 목록</h3>
+            <table stylule="width:100%" border="1" align="center">
+                <tr>
+                    <th>태스크ID</th>
+                    <th>태스크이름</th>
+                    <th>평균점수</th>
+                    <th>승인여부</th>
+                </tr>
+                {%for apply in applys%}
+                <tr>
+                    <th>{{apply.task_id}}</th>
+                    <th>{{apply.task_name}}</th>
+                    <th></th>
+                    <th>{{apply.is_approved}}</th>
+                </tr>
+                {%endfor%}
+            </table>
+            <a id="logout" typer='submit' href="/" class="btn" style="color:#082cce">뒤로가기></a>
+        </div>
     </div>
-  </div>
+</div>
 </html>
 {%else%}
 <script type="text/javascript">alert("접근권한없음! (관리자기능)");history.back();</script>
