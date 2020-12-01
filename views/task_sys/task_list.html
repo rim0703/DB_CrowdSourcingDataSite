@@ -95,7 +95,7 @@
                 </td>
                 <td>
                     <form action="/task_sys/delete/{{task.task_id}}{{task.task_table_name}}?_method=DELETE" method="POST">
-                        <a id="drop" type='submit' class="badge badge-danger">삭제</a>
+                        <button id="drop" type='submit' style="border: 0;" class="badge badge-danger">삭제</button>
                     </form>
                     {%if task.is_closed==false%}
 

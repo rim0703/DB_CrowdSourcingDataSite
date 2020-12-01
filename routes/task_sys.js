@@ -162,13 +162,6 @@ router.delete('/delete/:id:table_name',isLoggedIn,async (req,res,next)=>{
     await Task.destroy({
         where:{task_id:delete_id}
     })
-    .then(result=>{
-        res.send(`<script type="text/javascript">alert("태스크 삭제 성공!");history.back();</script>`);
-    })
-    .catch(err=>{
-        console.log(err);
-        res.send(`<script type="text/javascript">alert("ERROR:삭제실패!");history.back();</script>`);
-    });
     //STEP2:ODT삭제
     await ODT.destroy({
         where:{t_id:delete_id}
@@ -187,6 +180,14 @@ router.delete('/delete/:id:table_name',isLoggedIn,async (req,res,next)=>{
     await Apply.destroy({
         where:{task_id:delete_id}
     })
+    .then(result=>{
+        console.log("태스크 삭제 성공!");
+    })
+    .catch(err=>{
+        res.send(`<script type="text/javascript">alert("ODT생성 에러! 뒤로돌아갑니다.");history.back();</script>`);
+        console.log(err);
+        console.log("에러발생! 태스크 삭제 실패!");
+    });
     var tasks=await Task.findAll();
     res.render('./task_sys/task_list',{tasks});
 });
