@@ -58,111 +58,58 @@
     text-align: center;
     background-color: white;
     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.20), 0 15px 12px rgba(0, 0, 0, 0.12);">
-        <h2> 태스크 정보</h2>
-        {%if user.role==0%}
-        <table stylule="width:100%" border="1" align="center">
-            <thead>
-                <tr>
-                    <th>태스크ID</th>
-                    <th>태스크이름</th>
-                    <th>설명</th>
-                    <th>태스크테이블이름</th>
-                    <th>최소업로드주기</th>
-                    <th>진행중/종료</th>
-                    <th>테이블스키마</th>
-                    <ul></ul>
-            </thead>
-            </tr>
-
+        <div class="card bg-light mb-3">
+        <h3 class="card-header"><b>태스크 정보</b></h3>
+        
+        
             {%for task in tasks%}
-            <tr>
-                <td>{{task.task_id}}</td>
-                <td>{{task.task_name}}</td>
-                <td>{{task.description}}</td>
-                <td>{{task.task_table_name}}</td>
-                <td>{{task.min_upload_freq}}</td>
-                <td>
-                    {{'진행중' if task.is_closed==false}}
-                    {{'종료' if task.is_closed==true}}
-                </td>
-                <td>{{task.table_schema}}</td>
-            </tr>
-            {%endfor%}
-        </table>
-        {%else%}
-        <HR SIZE=3>
-        <table stylule="width:100%" border="1" align="center">
-            <thead>
-                <tr>
-                    <th>태스크 고유ID</th>
-
-                    <th>태스크이름</th>
-                    <th>설명</th>
-                    <th>최소업로드주기</th>
-                    <th>진행중/종료</th>
-                    <ul></ul>
-            </thead>
-            </tr>
-
-            {%for task in tasks%}
-            <tr>
-                <td>{{task.task_id}}</td>
-                <td>{{task.task_name}}</td>
-                <td>{{task.description}}</td>
-                <td>{{task.min_upload_freq}}</td>
-                <td>
-                    {%if task.is_closed==false%}
-                    <button>참여하기</button>
+            <div style="text-align: left; margin-left: 50px;"><b style="margin-right: 10px;">태스크ID</b> {{task.task_id}}</div> <hr style="margin:auto">
+            <div style="text-align: left; margin-left: 50px;"><b style="margin-right: 10px;">태스크이름</b> {{task.task_name}}</div><hr style="margin:auto">
+            <div style="text-align: left; margin-left: 50px;"><b style="margin-right: 10px;">설명</b> {{task.description}}</div><hr style="margin:auto">
+            <div style="text-align: left; margin-left: 50px;"><b style="margin-right: 10px;">태스크테이블이름</b> {{task.task_table_name}}</div><hr style="margin:auto">
+            <div style="text-align: left; margin-left: 50px;"><b style="margin-right: 10px;">최소업로드주기 </b>{{task.min_upload_freq}}(일)</div><hr style="margin:auto">
+            <div style="text-align: left; margin-left: 50px;"><b style="margin-right: 10px;">진행상태</b> {{'진행중' if task.is_closed==false}}
+                    {{'종료' if task.is_closed==true}} 
+                
+                    {%if user.role==1%}
+                    <a type="button" class="badge badge-primary" href="/task_sys/{{user.id}}/apply_{{task.task_id}}" method='GET'>참여하기</a>
                     {%endif%}
-                    {{'종료' if task.is_closed==true}}
-                </td>
-            </tr>
-            {%endfor%}
-        </table>
-        {%endif%}
-        <HR SIZE=3>
-        <h2>태스크의 원본 데이터 타입</h2>
 
-        <table stylule="width:100%" border="1" align="center">
-            <tr>
-                <th>태스크ID</th>
-                <th>타입이름</th>
-                <th>스키마정보</th>
-                <th>매핑정보</th>
-            </tr>
-            {%for odt in odts%}
-            <tr>
-                <th>{{odt.t_id}}</th>
-                <th>{{odt.name}}</th>
-                <th>{{odt.schema_info}}</th>
-                <th>{{odt.mapping_info}}</th>
-            </tr>
+                </div><hr style="margin:auto">
+            <div style="text-align: left; margin-left: 50px;"><b style="margin-right: 10px;">테이블스키마</b> {{task.table_schema}}</div><hr style="margin:auto">
             {%endfor%}
-        </table>
-        {%if applys %}
-        <HR SIZE=3>
-        <h2>태스크에 참여중인 제출자</h2>
+            <div style="text-align: left; margin-left: 50px;"><b style="margin-right: 10px;">태스크 원본 데이터타입</b>     
+                {%for odt in odts%}
+                    <a class="badge badge-dark" data-toggle="collapse" href="#{{odt.name}}" role="button" aria-expanded="false" aria-controls="collapseExample">{{odt.name}}</a>
+                    <div class="collapse" id="{{odt.name}}">
+                        <div class="card card-body">
+                            <div><b>스키마정보:</b>{{odt.schema_info}}</div>
+                            <div><b>스키마매핑정보:</b>{{odt.mapping_info}}</div>
+                        </div>
+                    </div>
+                {%endfor%}
 
-        <table stylule="width:100%" border="1" align="center">
-            <tr>
-                <th>사용자ID</th>
-            </tr>
-            {%for apply in applys%}
-            <tr>
-                <th><a type='submit' name='id' class="btn" href='/userinfo/stat/{{apply.user_id}}' method='GET'>{{apply.user_id}}</a></th>
-            </tr>
-            {%endfor%}
-        </table>
-        {%endif%}
+
+                {%if user.role==0%}
+                <a type="button" class="btn btn-primary" href="/task_sys/add_odt/{{task_id}}" method='GET' style="padding: .1rem .2rem; font-size: 0.8em;">추가하기></a>
+                
+            </div><hr style="margin:auto">
+            <div style="text-align: left; margin-left: 50px;"><b style="margin-right: 10px;">참여자</b>{%for apply in applys%}
+                    <a type='submit' name='id' class="badge badge-dark" href='/userinfo/stat/{{apply.user_id}}' method='GET'>{{apply.user_id}}</a>
+                {%endfor%}</div>
+            {%endif%}
+            
+        </div>
 
         {%if user.role==0 %}
-        <a type="button" href="/task_sys/add_odt/{{task_id}}" method='GET' style="margin-top:10px; ">추가하기></a>
-        <div><a type="button" href="/task_sys" class="btn btn-primary" style="margin-top:10px; ">시스템메인페이지</a></div>
+        <div><a type="button" href="/task_sys" class="btn btn-primary" style="margin-top:30px; margin-bottom: 30px; ">시스템메인페이지</a></div>
         {%endif%}
-        <div><a type="button" href="/" class="btn btn-primary" style="margin-top:10px; margin-bottom:10px;">종료</a></div>
+        <div><a type="button" href="/" class="btn btn-primary" style="margin-top:30px; margin-bottom: 30px;">종료</a></div>
     </div>
-</body>
 
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
 </html>
 <!--
 <script type="text/javascript">alert("접근권한없음! (관리자기능)");location.href="/auth/logout";</script>
