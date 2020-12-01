@@ -8,11 +8,13 @@
     <!--<link href="..\bootstrap-3.3.2\dist\css\bootstrap.min.css" rel="stylesheet">-->
 
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
   
   </head>
   <body>
     {% if user and user.id %}
     <!--로그인 성공 시 페이지 넘겨주기-->
+    <div class="spinner-border text-light" role="status" style="width:5rem;height:5rem;"></div>
     <script type="text/javascript">location.href="/main";</script>
     {% else %}
     <div class="cont">
@@ -116,5 +118,8 @@
       </div>
     </div>
     <script type="text/javascript" src="/main.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
   </body>
+  
 </html>
