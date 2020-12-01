@@ -127,12 +127,15 @@ router.get('/search', isLoggedIn, async(req, res,next)=>{
         console.log({users});
         res.render('user_list',{users});
     }
-    //나이 검색
+    //나이대 검색
     if(searchType=='age'){
+        var age_range=searchText.split('~');
+        //console.log(age_range);
         const users=await User.findAll({
-            where:{age:searchText}
+            where:{age:
+            {[Op.between]:[age_range[0],age_range[1]]}}
         })
-        console.log({users});
+        //console.log({users});
         res.render('user_list',{users});
     }
 
