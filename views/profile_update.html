@@ -48,13 +48,13 @@
 <body>
     <div class="abcd" style="overflow: hidden;
     margin: auto;
-    position: absolute; /*relative*/
-    top: 50px;
+    position: relative; /*relative*/
+    margin-top: 20px;
     left: 0;
     right: 0;
     bottom: 0;
     width: 900px;
-    height: 600px;
+    height: 640px;
     text-align: center;
     background-color: white;
     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.20), 0 15px 12px rgba(0, 0, 0, 0.12);">
@@ -67,25 +67,26 @@
             <input class="form-control" type="password" name='password' required='required'/>
             </label>
         </div>-->
+        <h3><b>개인정보수정</b></h3>
             <label>
-                <span>사용자ID</span>
+                <span><b>사용자ID</b></span>
                 <input class="form-control" type="text" name='id' value={{user.id}} disabled>
             </label>
             <div class="form-group required control-label">
                 <label>
-                    <span>이메일</span>
+                    <span><b>이메일</b></span>
                     <input class="form-control" type="email" name='email' value={{user.email}}>
                 </label>
             </div>
             <div class="form-group required control-label">
                 <label>
-                    <span>이름</span>
+                    <span><b>이름</b></span>
                     <input class="form-control" type="text" name='username' value={{user.username}}>
                 </label>
             </div>
             <div class="form-group required control-label">
                 <label>
-                    <span>성별 </span>
+                    <span><b>성별</b> </span>
                     {% if user.sex=='남자' %}
                     <input type="radio" name="sex" value='남자' checked> <span>남자</span>
                     <input type="radio" name="sex" value='여자' /> <span>여자</span>
@@ -96,52 +97,46 @@
                     {% endif %}
                 </label>
             </div>
-            <h5 style="color:#082cce">아래 추가내용은 필수정보가 아닙니다!</h5>
-            <div>
+            <h5 style="color:#082cce"><b>추가정보</b></h5>
+            <center><table style="text-align: center;">
                 <label>
-                    <span>나이</span>
-                    {% if user.date_of_birth=='' or user.date_of_birth==null%}
+                    <tr> <td><b>나이</b></td>
+                    <td>{% if user.date_of_birth=='' or user.date_of_birth==null%}
                     <input type="number" name='age' value=0>
                     {% else %}
                     <input type="number" name='age' value={{user.age}}>
-                    {% endif %}
-                    <span style="font-size:8px;color:red">(나이:0 은 미등록으로 인식) 나이 미입력시 오류발생할 수 있음.</span>
+                    {% endif %}</td>
+                    <td><div><h6><span style="color: red;">*나이:0 은 미등록</span></h6></div></td></tr>
                 </label>
-            </div>
-            <div>
                 <label>
-                    <span>생일</span>
-                    {% if user.date_of_birth=='' or user.date_of_birth==null%}
+                    <tr><td><b>생일</b></td>
+                    <td>{% if user.date_of_birth=='' or user.date_of_birth==null%}
                     <input type="date" name='birth'>
                     {% else %}
                     <input type="date" name='birth' value={{user.date_of_birth}}>
-                    {% endif %}
+                    {% endif %}</td></tr>
                 </label>
-            </div>
-            <div>
                 <label>
-                    <span>주소</span>
-                    {% if user.address=='' or user.address==null%}
+                    <tr><td><b>주소</b></td>
+                    <td>{% if user.address=='' or user.address==null%}
                     <input type="text" name='addr'>
                     {% else %}
                     <input type="text" name='addr' value={{user.address}}>
-                    {% endif %}
+                    {% endif %}</td></tr>
                 </label>
-            </div>
-            <div>
                 <label>
-                    <span>전화번호</span>
-                    {% if user.cellphone=='' or user.cellphone==null%}
+                    <tr><td><b>전화번호</b></td>
+                    <td>{% if user.cellphone=='' or user.cellphone==null%}
                     <input type="text" name='phone'>
                     {%else%}
                     <input type="text" name='phone' value={{user.cellphone}}>
-                    {%endif%}
+                    {%endif%}</td></tr>
                 </label>
-            </div>
-            <h5 style="color:#082cce">** 사용자ID,계정유형은 변경불가합니다!</h5>
-            <button id="submit" type='submit' class="btn btn-primary">변경제출</button>
+            </table></center>
+            <h7 style="color:#082cce"><b>** 사용자ID,계정유형은 변경불가합니다!</b></h7>
+            <div><button id="submit" type='submit' class="btn btn-primary">변경제출</button><a id="logout" typer='submit' href="/profile" class="btn btn-secondary" style="margin-left: 10px;">뒤로가기></a></div>
         </form>
-        <a id="logout" typer='submit' href="/profile" class="btn" style="color:#082cce">뒤로가기></a>
+        
     </div>
 </body>
 </html>

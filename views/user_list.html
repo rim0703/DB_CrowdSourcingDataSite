@@ -4,7 +4,6 @@
 <title>전체 가입자 목록</title>
   {% if user.role==0 %}
 <div class="mx-auto">
-    <a id="logout" typer='submit' href="/" class="btn" style="color:#082cce;">뒤로가기></a>
     <h2 style="text-align: center; "><b>전체 가입자 목록</b></h2>
 
     <hr>
@@ -34,7 +33,8 @@
     </center>
     <center><p style="color:gray;">주의: 역할검색은 '관리자','제출자','평가자' <br>
                     성별검색은 '남자','여자'<br>
-                    나이대는 나이범위 입력 (예: 10~20)</p></center>
+                    나이대는 나이범위 입력 (예: 10~20)</p>
+                    <a id="logout" typer='submit' href="/main" class="btn btn-secondary" >뒤로가기></a></center>
 
     <hr>
 

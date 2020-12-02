@@ -50,11 +50,11 @@
         <a id="change-password" typer='submit' href="/userinfo/change_pw" class="btn btn-primary">비밀번호변경</a>
         {% if user.role!=0%}
         <form action="/userinfo/delete_user/{{user.id}}?_method=DELETE" method="POST">
-          <button id="drop" type='submit' class="btn btn-danger">회원탈퇴</button>
-          <span>** 클릭즉시 모든 정보가 삭제됩니다!</span>
+          <button id="drop" type='submit' class="btn btn-danger" style="padding: .375rem 4.5rem; margin-top: 5px;;">회원탈퇴</button>
+          <div style="color: red;">* 탈퇴시 모든 정보가 삭제됩니다!</div>
         </form>
         {%endif%}
-        <a id="logout" typer='submit' href="/" class="btn" style="color:#082cce">뒤로가기></a></center>
+        <a id="logout" typer='submit' href="/main" class="btn btn-secondary" >뒤로가기></a></center>
     </div>
   </div>
 {%endblock%}
