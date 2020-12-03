@@ -333,6 +333,13 @@ router.get('/manage/close/:task_id',isLoggedIn,async(req,res,next)=>{
 /*
     태스크 참여자 기능 구현
 */
+router.get('/pre/:task_id',isLoggedIn,async(req,res,next)=>{
+    var tasks=await Task.findAll({where:{task_id:req.params.task_id}});
+    //console.log(tasks[0].Applies.user_id);
+    //console.log(tasks[0].Applies[0].user_id);
+    //console.log(tasks[0].Apply.user_id);
+    res.render('./task_sys/pre_agreement',{tasks});
+})
 router.get('/:user_id/apply_:task_id',isLoggedIn,async(req,res,next)=>{
     var task_id=req.params.task_id;
     var user_id=req.params.user_id;

@@ -107,7 +107,7 @@
         </table>
         {%endif%}
         {%if user.role==1%}
-        <span class="badge badge-primary">V</span>신청제출
+        <span class="badge badge-primary">-</span>신청제출
         <span class="badge badge-success">V</span>승인받음
         <span class="badge badge-secondary">X</span>승인거절
 
@@ -132,7 +132,7 @@
                 <td>{{task.min_upload_freq}}</td>
                 <td>{%for apply in task.Applies%}
                         {%if apply.user_id==user.id and apply.is_approved==NULL%}
-                        <span class="badge badge-primary">V</span>
+                        <span class="badge badge-primary">-</span>
                         {%endif%}
                         {%if apply.user_id==user.id and apply.is_approved==true%}
                         <span class="badge badge-success">V</span>
@@ -142,7 +142,7 @@
                         {%endif%}
                     {%endfor%}</td>
                 <td>{%if task.is_closed==false%}
-                    <a type="button" class="btn btn-primary btn-sm" href="/task_sys/{{user.id}}/apply_{{task.task_id}}" method='GET'>참여하기</a>
+                    <a type="button" class="btn btn-primary btn-sm" href="/task_sys/pre/{{task.task_id}}" method='GET'>참여하기</a>
                     {%endif%}
                     {{'종료' if task.is_closed==true}}</td>
                     
@@ -150,9 +150,47 @@
             </tr>
             {%endfor%}
         </table>
+        
+        <h2>허가받은 태스크</h2>
+        <table class="table table-hover" style="width: 100%" align="center">
+            <thead>
+                <tr>
+                    <th>ID#</th>
+                    <th>태스크이름</th>
+                    <th style="width: 400px;">설명</th>
+                    <th>최소업로드주기</th>
+                    <th>승인현황</th>
+                    <th>진행중/종료</th>
+                
+            </thead>
+            </tr>
+
+            {%for task in tasks%}
+                {%for apply in task.Applies%}
+                    {%if apply.user_id==user.id and apply.is_approved==true%}
+            <tr>
+                <td>{{task.task_id}}</td>
+                <td><a type="button" href="/task_sys/info/{{task.task_id}}" method='GET'>{{task.task_name}}</a></td>
+                <td>{{task.description}}</td>
+                <td>{{task.min_upload_freq}}</td>
+                <td>
+                       
+                        승인받음
+                    </td>
+                <td>{%if task.is_closed==false%}
+                    <a type="button" class="btn btn-primary btn-sm" href="#" method='GET'>제출하기</a>
+                    
+                    {{'종료' if task.is_closed==true}}</td>
+                    {%endif%} 
+                    {%endif%}   
+                {%endfor%}
+            </tr>
+            {%endfor%}
+        </table>
 
         {%endif%}
         {%if user.role==2%}
+        <p>배정된 채점 파일들 (개발중)</p>
         <table stylule="width:100%" border="1" align="center">
             <thead>
                 <tr>
@@ -184,30 +222,6 @@
 
 
         {%endif%}
-        <!--아래 검색기능 (개발중)
-          <form action="/userinfo/search" method="GET" >
-            <div class="form-row">
-              <div class="form-group col-9">
-                <p></p>
-                <label>조건별 검색</label>
-                <div class="input-group">
-                  <select name="searchType" class="custom-select">
-                    <option value="id">ID검색</option>
-                    <option value="role">역할검색</option>
-                    <option value="age">나이검색</option>
-                    <option value="sex">성별검색</option>
-                    <option value="task" disabled>참여중인 태스크검색(개발중)</option>
-                  </select>
-                  <input type="text" name="searchText" placeholder="입력하세요">
-                  <h6>주의: 역할검색은 '관리자','제출자','평가자' / 성별검색은 '남성','여성' 으로 입력!</h6>
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-primary" type="submit">search</button>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </form>-->
         {%if user.role==0 %}
         <a type="button" href="/task_sys"  class="btn btn-primary" style="margin-top:10px;margin-bottom:10px;">시스템메인페이지</a>
         {%endif%}
