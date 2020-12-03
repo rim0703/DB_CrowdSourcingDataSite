@@ -377,5 +377,26 @@ router.get('/:user_id/apply_:task_id',isLoggedIn,async(req,res,next)=>{
     }
 })
 
+/* 1팀: 제출자 페이지 라우터 추가 */
+router.get('/partic',isLoggedIn,async(req,res,next)=>{
+    var tasks=await Task.findAll({
+        include:[
+            {
+                model:Apply,
+                required:false,
+                attributes:['user_id','is_approved']
+            },{
+                model:ODT,
+                required:false,
+                attributes:['name']
+            }
+        ]
+    });
+    res.render('partic_main',{tasks});
+})
+router.get('/partic/partic',isLoggedIn,async(req,res,next)=>{
+    res.render('partic_partic',{title:'제출자 제출 페이지'});
+})
+
 
 module.exports=router;

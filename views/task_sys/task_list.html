@@ -151,6 +151,7 @@
             {%endfor%}
         </table>
         
+        
         <h2>허가받은 태스크</h2>
         <table class="table table-hover" style="width: 100%" align="center">
             <thead>
@@ -178,7 +179,7 @@
                         승인받음
                     </td>
                 <td>{%if task.is_closed==false%}
-                    <a type="button" class="btn btn-primary btn-sm" href="#" method='GET'>제출하기</a>
+                    <a type="button" class="btn btn-primary btn-sm" href="/task_sys/partic" method='GET'>제출하기</a>
                     
                     {{'종료' if task.is_closed==true}}</td>
                     {%endif%} 

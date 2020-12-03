@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
   <head>
     <title>크라우드 소싱 데이터 수집 사이트</title>
@@ -8,118 +8,116 @@
     <!--<link href="..\bootstrap-3.3.2\dist\css\bootstrap.min.css" rel="stylesheet">-->
 
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
   
   </head>
   <body>
-    {% if user and user.id %}
-    <!--로그인 성공 시 페이지 넘겨주기-->
-    <div class="spinner-border text-light" role="status" style="width:5rem;height:5rem;"></div>
-    <script type="text/javascript">location.href="/main";</script>
-    {% else %}
-    <div class="cont">
-      <div class="form sign-in">
-        <form  action="/auth/login" method="POST">
-        <h2>로그인</h2>
-        <label>
-          <span>사용자 ID</span>
-          <input type="text" name="id" required>
-        </label>
-        <p></p>
-        <label>
-          <span>비밀번호</span>
-          <input type="password" name="password" required>
-        </label>
-        <button id='button' type="submit" class="button">로그인</button>
-        <!--비밀번호 찾기 기능 비활성화-->
-        <!--<p class="forgot-pass">Forgot Password ?</p>-->
-      </form>
-    </div>
+      {% if user and user.id %}
+      <!--로그인 성공 시 페이지 넘겨주기-->
+      <div class="spinner-border text-light" role="status" style="width:5rem;height:5rem;"></div>
+      <script type="text/javascript">location.href="/main";</script>
+      {% else %}
+      <div class="cont">
+          <div class="form sign-in">
+              <form action="/auth/login" method="POST">
+                  <h2>로그인</h2>
+                  <label>
+                      <span>사용자 ID</span>
+                      <input type="text" name="id" required>
+                  </label>
+                  <p></p>
+                  <label>
+                      <span>비밀번호</span>
+                      <input type="password" name="password" required>
+                  </label>
+                  <button id='button' type="submit" class="button">로그인</button>
+                  <!--비밀번호 찾기 기능 비활성화-->
+                  <!--<p class="forgot-pass">Forgot Password ?</p>-->
+              </form>
+          </div>
 
-      <div class="sub-cont">
-        <div class="img">
-          <div class="img-text m-up">
-            <h2>처음입니까?</h2>
-            <p>클릭하여 회원가입 페이지로 이동합니다!</p>
+          <div class="sub-cont">
+              <div class="img">
+                  <div class="img-text m-up">
+                      <h2>처음입니까?</h2>
+                      <p>클릭하여 회원가입 페이지로 이동합니다!</p>
+                  </div>
+                  <div class="img-text m-in">
+                      <h2>회원입니까?</h2>
+                      <p>클릭하여 로그인 페이지로 이동합니다!</p>
+                  </div>
+                  <div class="img-btn">
+                      <span class="m-up">회원가입</span>
+                      <span class="m-in">로그인</span>
+                  </div>
+              </div>
+              <div class="form sign-up">
+                  <h2>회원가입</h2>
+                  <form action="/auth/join" method="POST">
+
+                      <div class="form-group required control-label">
+                          <label>
+                              <span>사용자ID</span>
+                              <input class="form-control" type="text" name='id' required='required' />
+                          </label>
+                      </div>
+                      <div class="form-group required control-label">
+                          <label>
+                              <span>비밀번호</span>
+                              <input class="form-control" type="password" name='password' required='required' />
+                          </label>
+                      </div>
+                      <div class="form-group required control-label">
+                          <label>
+                              <span>이메일</span>
+                              <input class="form-control" type="email" name='email' required='required'>
+                          </label>
+                      </div>
+                      <div class="form-group required control-label">
+                          <label>
+                              <span>이름</span>
+                              <input class="form-control" type="text" name='username' required='required'>
+                          </label>
+                      </div>
+                      <div class="form-group required control-label">
+                          <label>
+                              <span>성별 </span>
+                              <input type="radio" name="sex" value='남자' required /> <span>남자</span>
+                              <input type="radio" name="sex" value='여자' /> <span>여자</span>
+                          </label>
+                      </div>
+                      <div class="form-group required control-label">
+                          <label>
+                              <span>가입유형</span>
+                              <input type="radio" name="role" value="1" required /><span>제출자</span>
+                              <input type="radio" name="role" value="2" /><span>평가자</span>
+                              <input type="radio" name="role" disabled /><span>관리자</span>
+                          </label>
+                      </div>
+                      <p></p>
+                      <label>
+                          <span>나이</span>
+                          <input type="number" name='age' value="0">
+                      </label>
+                      <label>
+                          <span>생일</span>
+                          <input type="date" name='birth'>
+                      </label>
+                      <label>
+                          <span>주소</span>
+                          <input type="text" name='addr'>
+                      </label>
+                      <label>
+                          <span>전화번호</span>
+                          <input type="text" name='phone'>
+                      </label>
+                      <button id='button' type="submit" class="button">회원가입</button>
+                  </form>
+              </div>
+              {% endif %}
           </div>
-          <div class="img-text m-in">
-            <h2>회원입니까?</h2>
-            <p>클릭하여 로그인 페이지로 이동합니다!</p>
-          </div>
-          <div class="img-btn">
-            <span class="m-up">회원가입</span>
-            <span class="m-in">로그인</span>
-          </div>
-        </div>
-        <div class="form sign-up">
-          <h2>회원가입</h2>
-          <form action="/auth/join" method="POST">
-            
-            <div class="form-group required control-label"> 
-              <label>
-                <span>사용자ID</span>
-                <input class="form-control" type="text" name='id' required='required'/>
-              </label>
-            </div>
-            <div class="form-group required control-label"> 
-              <label>
-                <span>비밀번호</span>
-                <input class="form-control" type="password" name='password' required='required'/>
-              </label>
-            </div>
-            <div class="form-group required control-label"> 
-              <label>
-                <span>이메일</span>
-                <input class="form-control" type="email" name='email' required='required'>
-              </label>
-            </div>
-            <div class="form-group required control-label"> 
-              <label>
-                <span>이름</span>
-                <input class="form-control" type="text" name='username' required='required'>
-              </label>
-            </div>
-            <div class="form-group required control-label"> 
-              <label>
-                <span>성별 </span>
-                <input type="radio" name="sex" value='남자' required/> <span>남자</span>
-                <input type="radio" name="sex" value='여자'/> <span>여자</span> 
-              </label>
-            </div>
-            <div class="form-group required control-label"> 
-            <label>
-              <span>가입유형</span>
-              <input type="radio" name="role" value="1" required/><span>제출자</span>
-              <input type="radio" name="role" value="2"/><span>평가자</span>
-              <input type="radio" name="role" disabled/><span>관리자</span>
-            </label>
-          </div>
-          <p></p>
-          <label>
-            <span>나이</span>
-            <input type="number" name='age' value="0">
-          </label>
-          <label>
-            <span>생일</span>
-            <input type="date" name='birth'>
-          </label>
-          <label>
-            <span>주소</span>
-            <input type="text" name='addr'>
-          </label>
-          <label>
-            <span>전화번호</span>
-            <input type="text" name='phone'>
-          </label>
-          <button id='button' type="submit" class="button">회원가입</button>
-        </form>
-        </div>
-        {% endif %}
       </div>
-    </div>
-    <script type="text/javascript" src="/main.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="/main.js"></script>
+      <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+      <script src="/js/bootstrap.min.js"></script>
   </body>
-  
 </html>
