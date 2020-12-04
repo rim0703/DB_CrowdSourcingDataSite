@@ -29,6 +29,6 @@ User.associate(db);
 Task.associate(db);
 ODT.associate(db);
 Apply.associate(db);
-pdf.init(db);
+pdf.associate(db);
 
 module.exports = db;
