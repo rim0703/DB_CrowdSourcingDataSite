@@ -54,7 +54,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    width: 900px;
+    width: 1200px;
     text-align: center;
     background-color: white;
     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.20), 0 15px 12px rgba(0, 0, 0, 0.12);">
@@ -95,13 +95,56 @@
                 
             </div><hr style="margin:auto">
             <div style="text-align: left; margin-left: 50px;"><b style="margin-right: 10px;">참여자</b>{%for apply in applys%}
-                    <a type='submit' name='id' class="badge badge-dark" href='/userinfo/stat/{{apply.user_id}}' method='GET'>{{apply.user_id}}</a>
-                {%endfor%}</div>
+                    <a type='submit' name='id' class="badge badge-dark" href='/userinfo/stat/{{apply.user_id}}' method='GET'>{{apply.user_id}}</a></div>
+                {%endfor%}
             {%endif%}
             
         </div>
 
+
+
+
+
         {%if user.role==0 %}
+
+
+        <h3 class="card-header"><b>제출된 파싱 데이터</b></h3>
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">제출자</th>
+                <th scope="col">평가자</th>
+                <th scope="col">태스크이름</th>
+                <th scope="col">데이터타입</th>
+                <th scope="col">전체튜플수</th>
+                <th scope="col">NULL비율</th>
+                <th scope="col">평가점수</th>
+                <th scope="col">P/NP</th>
+
+              </tr>
+            </thead>
+            <tbody>
+                {%for pdf in pdfs%}
+              <tr>
+                <th scope="row">{{pdf.pars_id}}</th>
+                <td>{{pdf.submitter_id}}</td>
+                <td>{{pdf.rater_id}}</td>
+                <td>{{pdf.Task.task_name}}</td>
+                <td>{{pdf.odt}}</td>
+                <td>{{pdf.num_total_tuples}}</td>
+                <td>{{(pdf.null_ratio*100).toFixed(2)}}%</td>
+                <td>{{pdf.quality_score}}</td>
+                <td>{{'평가대기중' if pdf.is_passed==null}}
+                    {{'P' if pdf.is_passed==true}}
+                    {{'NP' if pdf.is_passed==false}}
+                </td>
+
+              </tr>
+                {%endfor%}
+            </tbody>
+          </table>
+
         <div><a type="button" href="/task_sys" class="btn btn-primary" style="margin-top:30px; margin-bottom: 30px; ">시스템메인페이지</a></div>
         {%endif%}
         <div><a type="button" href="/" class="btn btn-primary" style="margin-top:30px; margin-bottom: 30px;">종료</a></div>

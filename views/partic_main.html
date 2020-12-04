@@ -71,7 +71,7 @@
                             <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
                     </li> -->
                     <li>
-                        <a class="profile-pic" href="#"> <img src="/plugins/images/users/profile_basic.png" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">{{user.username}}</b></a>
+                        <a class="profile-pic" href="#"> <img src="/plugins/images/users/profile_basic.png" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">{{user.id}}</b></a>
                     </li>
                 </ul>
             </div>
@@ -94,13 +94,13 @@
                         <a href="/task_sys/partic" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>파일제출</a>
                     </li>
                     <li>
-                        <a href="/task_sys/partic/partic" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>제출현황</a>
+                        <a href="/task_sys/partic/partic/{{user.id}}" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>제출현황</a>
                     </li>
                    
 
                 </ul>
                 <div class="center p-20">
-                     <a href="/auth/logout" target="_blank" class="btn btn-danger btn-block waves-effect waves-light">로그아웃</a>
+                     <a href="/auth/logout" class="btn btn-danger btn-block waves-effect waves-light">로그아웃</a>
                  </div>
             </div>
             
@@ -117,9 +117,9 @@
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                         <h2 class="page-title"><b>승인받은 태스크 목록</b></h2> </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                        <a href="/auth/logout" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">로그아웃</a>
+                        <a href="/auth/logout" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">로그아웃</a>
                         <ol class="breadcrumb">
-                            <li><a href="#">{{user.username}}</a></li>
+                            <li><a href="#">{{user.id}}</a></li>
                         </ol>
                     </div>
                     <!-- /.col-lg-12 -->
@@ -202,20 +202,23 @@
                                         <tr>
                                             <td class="id">{{task.task_id}}</td>          
                                             <td class="txt-oflo"> {{task.task_name}}</td>
-                                             {%if task.is_closed==false%}                                 
-                                            <td><input type="number" placeholder="회차(숫자)"name="number" size="10" style="width:100%;"></td>
-                                            <td><input type="date"></td>   
-                                            <td><input type="date"></td>  
-                                            <td><form>
-                                                <select>
+                                             {%if task.is_closed==false%}  
+                                             <form action="/task_sys/upload" method="post" enctype="multipart/form-data">                               
+                                            <td><input type="number" placeholder="회차(숫자)"name="time" size="10" style="width:100%;"></td>
+                                            <td><input type="date" name="start_date"></td>   
+                                            <td><input type="date" name="end_date"></td>  
+                                            <td>
+                                                <select name="odt">
                                                     {%for odt in task.ODTs%}
-                                                  <option>{{odt.name}}</option>
+                                                  <option value="{{odt.name}}">{{odt.name}}</option>
                                                     {%endfor%}
                                                 </select>
-                                              </form></td>
+                                              </td>
                                             <!-- ===========action 뒤의 주소 값이 파일이 전송될 위치입니다=============== -->
-                                            <td><form action="/task_sys/upload" method="post" enctype="multipart/form-data">
+                                            <td>
                                                 <input type="file" name="csv_file" accept="file/csv">
+                                                <input type="text" name="submitter_id" value="{{user.id}}" hidden>
+                                                <input type="number" name="task_id" value="{{task.task_id}}" hidden>
                                                 <input type="submit" value="제출하기"> </td>
                                             </form>
                                             {%else%}
@@ -271,6 +274,7 @@
     <script src="/js/custom.min.js"></script>
     <script src="/js/dashboard1.js"></script>
     <script src="/plugins/bower_components/toast-master/js/jquery.toast.js"></script>
+
 </body>
 
 </html>

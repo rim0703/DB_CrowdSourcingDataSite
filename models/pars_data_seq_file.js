@@ -69,6 +69,10 @@ module.exports=class pdf extends Sequelize.Model{
             submitter_id:{
                 type:Sequelize.INTEGER,
                 allowNull:false,
+            },
+            odt:{
+                type:Sequelize.STRING(255),
+                allowNull:false,
             }
         },{
             sequelize,

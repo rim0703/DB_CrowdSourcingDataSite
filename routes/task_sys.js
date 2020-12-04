@@ -5,11 +5,14 @@ const Task=require('../models/task');
 const ODT=require('../models/original_data_type');
 const Apply=require('../models/apply');
 const User=require('../models/user');
+const pdf=require('../models/pars_data_seq_file');
 var mysql = require('mysql2');
 var database=require('../config/config.json');
 var multer=require('multer');
 var upload=multer({dest:'uploads/'});
-
+const parse=require('csv-parse/lib/sync');
+const fs=require('fs');
+const { sequelize } = require('../models/task');
 
 var con = mysql.createConnection(database.db);
 
@@ -233,7 +236,14 @@ router.get('/info/:task_id',isLoggedIn,async(req,res,next)=>{
         where:{task_id:task,
                 is_approved:true},
     })
-    res.render('./task_sys/task_info',{tasks,odts,task_id,applys});
+    var pdfs=await pdf.findAll({
+        include:{
+            model:Task,
+            required:false,
+            attributes:['task_name']
+        }
+    })
+    res.render('./task_sys/task_info',{tasks,odts,task_id,applys,pdfs});
 }catch(err){
     console.error(err);
     res.send(`<script type="text/javascript">alert(" 에러! 뒤로돌아갑니다.");history.back();</script>`);
@@ -397,14 +407,97 @@ router.get('/partic',isLoggedIn,async(req,res,next)=>{
     });
     res.render('partic_main',{tasks});
 })
-router.get('/partic/partic',isLoggedIn,async(req,res,next)=>{
-    res.render('partic_partic',{title:'제출자 제출 페이지'});
+
+/* 1팀: 파일제출 현환 라우터 */
+router.get('/partic/partic/:id',isLoggedIn,async(req,res,next)=>{
+    var pdfs=await pdf.findAndCountAll({
+        include:[
+            {
+                model:Task,
+                required:false,
+                attributes:['task_name']
+            }
+
+        ],
+        where:{submitter_id:req.params.id}
+    });
+    var pass_files=await pdf.findAndCountAll({
+        where:{submitter_id:req.params.id,
+                is_passed:'P'}
+    });
+    var task_count=pdfs.count;
+    var total_tuples=0;
+    for(var i=0;i<pass_files;i++){
+        total_tuples+=pass_files.rows[i].num_total_tuples;
+    }
+    console.log(total_tuples);
+    res.render('partic_partic',{pdfs,task_count,pass_files,total_tuples});
 })
 /* 1팀: 제출자 파일 제출 라우터 */
-router.post('/upload',upload.single('csv_file'),function(req,res,next){
-    console.log(req.body);
-    console.log(req.file);
-    console.log(req.file.fieldname);
+router.post('/upload',upload.single('csv_file'),async(req,res,next)=>{
+    try{
+        var filename=req.file.filename;
+        const csv=fs.readFileSync('uploads/'+filename);
+        const records=parse(csv.toString('utf-8'));
+        console.log(records.length); //튜플수
+        var num_total_tuples=records.length;
+        //중복튜플
+        var count_duplicate_tuple=0;
+        for(var i=0;i<records.length;i++){
+            for(var j=i+1;j<records.length;j++){
+                if(records[i]==records[j]){
+                    count_duplicate_tuple++;
+                }
+            }
+        }
+        //null비율
+        var count_null=0;
+        for(var i=0;i<records.length;i++){
+            for(var j=0;j<records[i].length;j++){
+                console.log(records[i]);
+                console.log(records[i][j]);
+                if(records[i][j]==''){
+                    console.log(count_null);
+                    count_null++;
+                }
+            }
+        }
+
+        //렌덤으로 평가자 찾기
+        var rater=await User.findOne({
+            order:sequelize.random('username'),
+            where:{role:2}
+        })
+        //pars테이블로 저장
+        console.log(count_null);
+        var null_ratio=count_null/(num_total_tuples*records[0].length);
+
+        var pars_id=await pdf.max('pars_id')+1;
+        var files=await pdf.create({
+            pars_id:pars_id,
+            duration_start:req.body.start_date,
+            duration_end:req.body.end_date,
+            iteration:req.body.time,
+            submitted_task_id:req.body.task_id,
+            rater_id:rater.id,
+            is_evaluated:null,
+            num_total_tuples:num_total_tuples,
+            num_duplicate_tuples:count_duplicate_tuple,
+            null_ratio:null_ratio,
+            quelity_score:null,
+            is_passed:null,
+            csv_file_name:req.file.filename,
+            csv_file_size:req.file.size,
+            csv_file_updated_at:Date(),
+            submitter_id:req.body.submitter_id,
+            odt:req.body.odt,
+        });
+        res.send(`<script type="text/javascript">alert("제출성공하셨습니다!");history.back();</script>`)
+    }catch(err){
+        console.error(err);
+        res.send(`<script type="text/javascript">alert(" 에러! 뒤로돌아갑니다.");history.back();</script>`);
+}
+
 })
 
 module.exports=router;

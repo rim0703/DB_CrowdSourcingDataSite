@@ -76,7 +76,6 @@ CREATE TABLE IF NOT EXISTS pars_data_seq_file(
     duration_start DATE NOT NULL,
     duration_end DATE NOT NULL,
     iteration INTEGER NOT NULL,
-    orign_id INTEGER NOT NULL,
     submitted_task_id INTEGER NOT NULL,
     rater_id VARCHAR(20),
     is_evaluated BOOLEAN DEFAULT FALSE,
@@ -93,7 +92,8 @@ CREATE TABLE IF NOT EXISTS pars_data_seq_file(
 	csv_file_name varchar(255) NOT NULL,
   	csv_file_size int NOT NULL,
   	csv_file_updated_at date NOT NULL,
-  	submitter_id varchar(255) NOT NULL,
+  	submitter_id varchar(20) NOT NULL,
+	odt varchar(255) NOT NULL,
     
     /* Keys */
     CONSTRAINT PARS_PK
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS pars_data_seq_file(
 		FOREIGN KEY (submitter_id)
 			REFERENCES users (id)
 			ON DELETE CASCADE
-			ON UPDATE CASCADE
+			ON UPDATE CASCADE,
 
     CONSTRAINT PARS_TASK_FK
 		FOREIGN KEY (submitted_task_id)
@@ -161,5 +161,5 @@ CREATE TABLE IF NOT EXISTS apply(
 	user_id VARCHAR(255) NOT NULL,
     task_id INTEGER NOT NULL,
     task_name VARCHAR(255) NOT NULL,
-    is_approved BOOLEAN DEFAULT NULL,
+    is_approved BOOLEAN DEFAULT NULL
 );

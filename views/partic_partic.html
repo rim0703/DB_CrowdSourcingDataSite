@@ -7,18 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" type="image/jpg" sizes="16x16" href="plugins/images/yonsei_logo_icon_black.jpg">
+    <link rel="icon" type="image/jpg" sizes="16x16" href="/plugins/images/yonsei_logo_icon_black.jpg">
     <title>Yonsei_Data_sourcing</title>
     <!-- Bootstrap Core CSS -->
-    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Menu CSS -->
-    <link href="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+    <link href="/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
     <!-- animation CSS -->
-    <link href="css/animate.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
     <!-- color CSS -->
-    <link href="css/colors/default.css" id="theme" rel="stylesheet">
+    <link href="/css/colors/default.css" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -47,10 +47,10 @@
             <div class="navbar-header">
                 <div class="top-left-part">
                     <!-- Logo -->
-                    <a class="logo" href="index.html">
+                    <a class="logo" href="/index.html">
                         <!-- Logo icon image, you can use font-icon also -->
                         <!-- Logo text image you can use text also --><span class="hidden-xs">
-                        <!--This is dark logo text--><img src="plugins/images/yonsei_logo_bar.jpg" alt="home" class="dark-logo" /><!--This is light logo text--><img src="plugins/images/yonsei_logo_bar.jpg" alt="home" class="light-logo" />
+                        <!--This is dark logo text--><img src="/plugins/images/yonsei_logo_bar.jpg" alt="home" class="dark-logo" /><!--This is light logo text--><img src="/plugins/images/yonsei_logo_bar.jpg" alt="home" class="light-logo" />
                      </span> </a>
                 </div>
                 <!-- /Logo -->
@@ -60,7 +60,7 @@
                             <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
                     </li> -->
                     <li>
-                        <a class="profile-pic" href="#"> <img src="plugins/images/users/profile_basic.png" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">제출자 1(동적데이터)</b></a>
+                        <a class="profile-pic" href="#"> <img src="/plugins/images/users/profile_basic.png" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">{{user.id}}</b></a>
                     </li>
                 </ul>
             </div>
@@ -82,15 +82,15 @@
                 </div>
                 <ul class="nav" id="side-menu">
                     <li style="padding: 70px 0 0;">
-                        <a href="partic.main.html" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>태스크 참여</a>
+                        <a href="/task_sys/partic" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>태스크 참여</a>
                     </li>
                     <li>
-                        <a href="partic.partic.html" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>제출 현황</a>
+                        <a href="/task_sys/partic/partic/{{user.id}}" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>제출 현황</a>
                     </li>
 
                 </ul>
                 <div class="center p-20">
-                     <a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger btn-block waves-effect waves-light">로그아웃</a>
+                     <a href="/auth/logout" class="btn btn-danger btn-block waves-effect waves-light">로그아웃</a>
                  </div>
             </div>
             
@@ -105,11 +105,11 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">제출 현황</h4> </div>
+                        <h2 class="page-title"><b>제출 현황</b></h2> </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                        <a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">로그아웃</a>
+                        <a href="/auth/logout" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">로그아웃</a>
                         <ol class="breadcrumb">
-                            <li><a href="#">제출 현황</a></li>
+                            <li><a href="#">{{user.id}}</a></li>
                         </ol>
                     </div>
                 </div>
@@ -118,124 +118,31 @@
                 <div class="row">                    
                     <div class="col-md-12 col-xs-12">
                         <div class="white-box">
-                            <div class="user-bg"> <img width="100%" alt="user" src="plugins/images/yonsei_logo_big.jpg">
+                            <div class="user-bg"> <img width="100%" alt="user" src="/plugins/images/yonsei_logo_big.jpg">
                                 <div class="overlay-box">
                                     <div class="user-content">
-                                        <a href="javascript:void(0)"><img src="plugins/images/users/profile_basic.png" class="thumb-lg img-circle" alt="img"></a>
-                                        <h4 class="text-white">제출자 이름(동적데이터)</h4>
-                                        <h5 class="text-white">제출자 이메일(동적데이터)</h5> </div>
+                                        <a href="javascript:void(0)"><img src="/plugins/images/users/profile_basic.png" class="thumb-lg img-circle" alt="img"></a>
+                                        <h4 class="text-white">{{user.id}}</h4>
+                                        <h5 class="text-white">{{user.email}}</h5> </div>
                                 </div>
                             </div>
                             <div class="user-btm-box">
                                 <div class="col-md-4 col-sm-4 text-center">
                                     <p class="text-purple"><i class="ti-facebook"></i></p>
                                     <h6>제출<br/>태스크 수</h6> 
-                                    <h11>?(동적데이터)</h11></div>
+                                    <h11>{{task_count}}</h11></div>
                                 <div class="col-md-4 col-sm-4 text-center">
                                     <p class="text-blue"><i class="ti-twitter"></i></p>
                                     <h6>PASS<br/>태스크 수</h6> 
-                                    <h11>?(동적데이터)</h11></div>
+                                    <h11>{{pass_files.count}}</h11></div>
                                 <div class="col-md-4 col-sm-4 text-center">
                                     <p class="text-danger"><i class="ti-dribbble"></i></p>
                                     <h6>평균평가점수<br/></h6> 
-                                    <h11>?(동적데이터)</h11></div>
+                                    <h11>{{user.score}}</h11></div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- <div class="col-md-8 col-xs-12">
-                        <div class="white-box">
-                            <form class="form-horizontal form-material">
-                                <div class="form-group">
-                                    <label class="col-md-12"><h3><b>제출자 이름</b></h3></label>
-                                    <div class="col-md-12">
-                                        <h5 class="textarea">제출자 이름(동적데이터)</h5> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12"><h3><b>제출자 ID</b></h3></label>
-                                    <div class="col-md-12">
-                                        <h5 class="textarea">제출자 ID(동적데이터)</h5> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="example-email" class="col-md-12"><h3><b>Email</h3></b></label>
-                                    <div class="col-md-12">
-                                        <h5 class="textarea">EMAIL(동적데이터)</h5> </div> </div>
-                                                    
-                                <div class="form-group">
-                                    <label class="col-md-12"><h3><b>전화번호</b></h3></label>
-                                    <div class="col-md-12">
-                                        <h5 class="textarea">전화번호(동적데이터)</h5> </div>
-                                </div>                                
-                                <div class="form-group">
-                                    <label class="col-md-3"><h3><b>태스크 이름</b></h3></label>
-                                    <div class="col-md-12">
-                                        <h5 class="textarea">태스크 이름(동적데이터)</h5> </div>
-                                    </div>
-                                
-                                <div class="form-group">
-                                    <label class="col-md-12"><h3><b>원본데이터 타입</b></h3></label>
-                                    <div class="col-md-12">
-                                        <h5 class="textarea">원본데이터 타입(동적데이터)</h5> </div>
-                                    </div>
-                                    
-                                <div class="form-group">
-                                    <label class="col-md-12"><h3><b>파싱 데이터 시퀸스 파일</b></h3></label>
-                                    <div class="col-md-12">
-                                        <a href="javacript:void(0)" target = "_blank"> 시퀸스 파일.file</a> </div>
-                                    </div>
-
-                                <div class="form-group">
-                                        <label class="col-md-12"><h3>파싱 데이터 시퀸스 파일 정량평가 지수</h3></label>
-
-
-                                        <h4 class="box-title">index</h4>
-                                        <div class="table-responsive">
-                                            <table class="table" border="1">
-                                                <thead>
-                                                    <tr>                                                    
-                                                        <th><center>튜플 수</center></th>
-                                                        <th><center>중복 튜플 수</center></th>
-                                                        <th><center>컬럼 별 NULL 컬럼 비율</center></th> 
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="txt-oflo"><center>TUP_NUM(동적데이터)</center></td>
-                                                        <td class="txt-oflo"><center>DUP_TUP_NUM(동적데이터)</center></td>
-                                                        <td><span class="txt-oflo"><center>NULL_RATIO(동적데이터)</center></span></td>
-                                                    </tr>                                                
-                                                                                              
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                    </div>
-                                <div class="form-group">
-                                        <label class="col-sm-12">정성평가 점수</label>
-                                        <div class="col-sm-12">
-                                        <select class="form-control form-control-line">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                            <option>6</option>
-                                            <option>7</option>
-                                            <option>8</option>
-                                            <option>9</option>
-                                            <option>10</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <button class="btn btn-success"> Pass  </button> <button class="btn btn-danger"> Non-Pass </button>
-                                    </div>
-                                
-                                </div>
-                            </form>
-                        </div>
-                    </div> -->
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
@@ -253,19 +160,13 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td class="txt-oflo">이름1(동적데이터)</td>                                            
-                                            <td class="txt-oflo">태스크 ID(동적데이터)</td>
-                                            <td class="txt-oflo">2(동적데이터)</td>
-                                            <td class="txt-oflo">저장된 튜플 수(동적데이터)</td>
+                                            {%for pdf in pdfs.rows%}
+                                            <td class="txt-oflo"><a href='/task_sys/info/{{pdf.submitted_task_id}}'>{{pdf.Task.task_name}}</a></td>                                            
+                                            <td class="txt-oflo">{{pdf.submitted_task_id}}</td>
+                                            <td class="txt-oflo">{{pdfs.count}}</td>
+                                            <td class="txt-oflo">{{total_tuples}}</td>
+                                            {%endfor%}
                                         </tr>
-                                        <tr>
-                                            <td class="txt-oflo">이름2(동적데이터)</td>                                            
-                                            <td class="txt-oflo">태스크 ID(동적데이터)</td>
-                                            <td class="txt-oflo">1(동적데이터)</td>
-                                            <td class="txt-oflo">저장된 튜플 수(동적데이터)</td>
-                                        </tr>
-                                        
-                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -292,31 +193,20 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td class="txt-oflo">이름1(동적데이터)</td>                                            
-                                            <td class="txt-oflo">태스크 ID(동적데이터)</td>
-                                            <td class="txt-oflo">타입1(동적데이터)</td>
-                                            <td class="txt-oflo">1(동적데이터)</td>
-                                            <td class="txt-oflo">파싱 데이터</td>
-                                            <td class="txt-oflo">PASS</td>
+                                            {%for pdf in pdfs.rows%}
+                                            <td class="txt-oflo"><a href='/task_sys/info/{{pdf.submitted_task_id}}'>{{pdf.Task.task_name}}</a></td>                                            
+                                            <td class="txt-oflo">{{pdf.submitted_task_id}}</td>
+                                            <td class="txt-oflo">{{pdf.odt}}</td>
+                                            <td class="txt-oflo">{{pdf.iteration}}</td>
+                                            <td class="txt-oflo"></td>
+                                            <td class="txt-oflo">
+                                                {{ '평가중...' if pdf.is_passed==NULL}}
+                                                {{ 'NP' if pdf.is_passed==false}}
+                                                {{ 'P' if pdf.is_passed==true}}
+                                            
+                                            </td>
+                                            {%endfor%}
                                         </tr>
-                                        <tr>
-                                            <td class="txt-oflo">이름1(동적데이터)</td>                                            
-                                            <td class="txt-oflo">태스크 ID(동적데이터)</td>
-                                            <td class="txt-oflo">타입2  (동적데이터)</td>
-                                            <td class="txt-oflo">2(동적데이터)</td>
-                                            <td class="txt-oflo">파싱 데이터</td>
-                                            <td class="txt-oflo">PASS</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="txt-oflo">이름2(동적데이터)</td>                                            
-                                            <td class="txt-oflo">태스크 ID(동적데이터)</td>
-                                            <td class="txt-oflo">타입1(동적데이터)</td>
-                                            <td class="txt-oflo">1(동적데이터)</td>
-                                            <td class="txt-oflo">파싱 데이터</td>
-                                            <td class="txt-oflo">NON-PASS</td>
-                                        </tr>
-                                        
-                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -336,17 +226,17 @@
     </div>
     <!-- /#wrapper -->
     <!-- jQuery -->
-    <script src="plugins/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/plugins/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
-    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Menu Plugin JavaScript -->
-    <script src="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
+    <script src="/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
     <!--slimscroll JavaScript -->
-    <script src="js/jquery.slimscroll.js"></script>
+    <script src="/js/jquery.slimscroll.js"></script>
     <!--Wave Effects -->
-    <script src="js/waves.js"></script>
+    <script src="/js/waves.js"></script>
     <!-- Custom Theme JavaScript -->
-    <script src="js/custom.min.js"></script>
+    <script src="/js/custom.min.js"></script>
 </body>
 
 </html>
