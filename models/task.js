@@ -57,5 +57,9 @@ module.exports=class Task extends Sequelize.Model{
             foreignKey:'task_id',
             sourceKey:'task_id'
         })
+        db.Task.hasMany(db.pdf,{
+            foreignKey:'submitted_task_id',
+            targetKey:'task_id',
+        })
     }
 }

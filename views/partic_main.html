@@ -214,9 +214,9 @@
                                                 </select>
                                               </form></td>
                                             <!-- ===========action 뒤의 주소 값이 파일이 전송될 위치입니다=============== -->
-                                            <td><form action="http://localhost/upload.php" method="post" enctype="multipart/form-data">
-                                                <input type="file" name="file_submission">
-                                                <input type="submit"> </td>
+                                            <td><form action="/task_sys/upload" method="post" enctype="multipart/form-data">
+                                                <input type="file" name="csv_file" accept="file/csv">
+                                                <input type="submit" value="제출하기"> </td>
                                             </form>
                                             {%else%}
                                              <td>태스크참여가 종료되었습니다!</td>

@@ -7,6 +7,9 @@ const Apply=require('../models/apply');
 const User=require('../models/user');
 var mysql = require('mysql2');
 var database=require('../config/config.json');
+var multer=require('multer');
+var upload=multer({dest:'uploads/'});
+
 
 var con = mysql.createConnection(database.db);
 
@@ -397,6 +400,11 @@ router.get('/partic',isLoggedIn,async(req,res,next)=>{
 router.get('/partic/partic',isLoggedIn,async(req,res,next)=>{
     res.render('partic_partic',{title:'제출자 제출 페이지'});
 })
-
+/* 1팀: 제출자 파일 제출 라우터 */
+router.post('/upload',upload.single('csv_file'),function(req,res,next){
+    console.log(req.body);
+    console.log(req.file);
+    console.log(req.file.fieldname);
+})
 
 module.exports=router;

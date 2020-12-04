@@ -89,17 +89,22 @@ CREATE TABLE IF NOT EXISTS pars_data_seq_file(
     /* Qualitative evaluation */
     quality_score INTEGER,
     is_passed VARCHAR(2),
+
+	csv_file_name varchar(255) NOT NULL,
+  	csv_file_size int NOT NULL,
+  	csv_file_updated_at date NOT NULL,
+  	submitter_id varchar(255) NOT NULL,
     
     /* Keys */
     CONSTRAINT PARS_PK
 		PRIMARY KEY (pars_id),
-        
-	CONSTRAINT PARS_ORIGN_FK
-		FOREIGN KEY (orign_id)
-			REFERENCES original_data_files (odf_ID)
-			ON DELETE CASCADE
-			ON UPDATE CASCADE,
     
+	CONSTRAINT PARS_SUBMITTER_FK
+		FOREIGN KEY (submitter_id)
+			REFERENCES users (id)
+			ON DELETE CASCADE
+			ON UPDATE CASCADE
+
     CONSTRAINT PARS_TASK_FK
 		FOREIGN KEY (submitted_task_id)
 			REFERENCES task (task_id)

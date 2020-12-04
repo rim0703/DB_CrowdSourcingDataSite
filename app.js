@@ -9,7 +9,6 @@ var passport=require('passport');
 var methodOverride=require('method-override');
 var bodyParser=require('body-parser');
 
-
 dotenv.config();
 var pageRouter=require('./routes/index');
 const{sequelize}=require('./models');

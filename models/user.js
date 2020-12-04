@@ -80,7 +80,15 @@ module.exports=class User extends Sequelize.Model{
         db.User.hasMany(db.Apply,{
             foreignKey:'user_id',
             sourceKey:'id'
-        })
+        });
+        db.User.hasMany(db.pdf,{
+            foreignKey:'submitter_id',
+            targetKey:'id'
+        });
+        db.User.hasMany(db.pdf,{
+            foreignKey:'rater_id',
+            targetKey:'id'
+        });
         
     }
 };
