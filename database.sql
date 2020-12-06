@@ -37,20 +37,6 @@ CREATE TABLE IF NOT EXISTS users (
 INSERT INTO users(id,password,email,username,sex,role,score,created_at)
 VALUES ('admin','admin','admin@admin.com','관리자','남자',0,0,STR_TO_DATE('2020-11-01','%Y-%m-%d'));
 
-CREATE TABLE IF NOT EXISTS original_data_files (
-	submitter_id VARCHAR(20) NOT NULL,
-	odf_ID INTEGER NOT NULL UNIQUE,
-	
-	/*key*/
-	CONSTRAINT ODF_PK
-		PRIMARY KEY (odf_ID),
-	CONSTRAINT SUBMITTER_ID_FK
-		FOREIGN KEY (submitter_id)
-			REFERENCES users (id)
-			ON DELETE CASCADE
-			ON UPDATE CASCADE
-);
-
 /* ERD에서 task부분에 participate_id를 is_closed로 바뀜 */
 /* 참여자의 id는 해당 파싱파일 table에 저장됨 */
 CREATE TABLE IF NOT EXISTS task(

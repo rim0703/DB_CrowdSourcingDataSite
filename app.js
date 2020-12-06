@@ -16,6 +16,7 @@ const passportConfig=require('./passport');
 const authRouter=require('./routes/auth');
 const userinfoRouter=require('./routes/userinfo');
 const taskSysRouter=require('./routes/task_sys');
+const raterRouter = require('./routes/rater_router');
 
 var app = express();
 passportConfig();
@@ -52,7 +53,7 @@ app.use('/',pageRouter);
 app.use('/auth',authRouter);
 app.use('/userinfo',userinfoRouter);
 app.use('/task_sys',taskSysRouter);
-
+app.use('/rater_router',raterRouter);
 //front-end?
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
@@ -62,7 +63,8 @@ app.use((req,res,next)=>{
     const error=new Error(`${req.method} ${req.url} 라우터가 없습니다!`);
     error.status=404;
     //error.status=500;
-    next(error);
+    //next(error);
+    res.render('404');
 });
 
 nunjucks.configure('views',{

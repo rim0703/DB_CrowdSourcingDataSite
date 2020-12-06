@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="kor">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/jpg" sizes="16x16" href="/plugins/images/yonsei_logo_icon_black.jpg">
+    <title>Yonsei_Data_sourcing</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Menu CSS -->
+    <link href="/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+    <!-- animation CSS -->
+    <link href="/css/animate.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- color CSS -->
+    <link href="/css/colors/default.css" id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script>
+    function displayData(idx){
+            if(idx!=0){
+                idx=idx-1;
+            }
+            //태스크가 하나만 있을 때
+            if (typeof task_table_name[idx] == 'undefined'){
+                task_table_name_output.innerHTML = task_table_name.childNodes[0].nodeValue;
+                pars_id_output.innerHTML = pars_id.childNodes[0].nodeValue;
+                pars_id_output.value=pars_id.childNodes[0].nodeValue;
+                username_output.innerHTML = username.childNodes[0].nodeValue;
+                id_output.innerHTML = id.childNodes[0].nodeValue;
+                orign_id_output.innerHTML = orign_id.childNodes[0].nodeValue;
+                uploaded_file.innerHTML=upload.childNodes[0].nodeValue;
+                
+
+                uploaded_file.href=`/rater_router/download/`+upload.childNodes[0].nodeValue;
+                tn.innerHTML=num_total_tuples.childNodes[0].nodeValue;
+                dtn.innerHTML=num_duplicate_tuples.childNodes[0].nodeValue;
+                nr.innerHTML=(null_ratio.childNodes[0].nodeValue*100).toFixed(2)+'%';
+
+            }
+            //태스크가 여러개일 때
+            else{
+                task_table_name_output.innerHTML = task_table_name[idx].childNodes[0].nodeValue;
+                pars_id_output.innerHTML = pars_id[idx].childNodes[0].nodeValue;
+                pars_id_output.value = pars_id[idx].childNodes[0].nodeValue;
+                username_output.innerHTML = username[idx].childNodes[0].nodeValue;
+                id_output.innerHTML = id[idx].childNodes[0].nodeValue;
+                orign_id_output.innerHTML = orign_id[idx].childNodes[0].nodeValue;
+                uploaded_file.innerHTML=upload[idx].childNodes[0].nodeValue;
+
+                uploaded_file.href=`/rater_router/download/`+upload[idx].childNodes[0].nodeValue;
+                tn.innerHTML=num_total_tuples[idx].childNodes[0].nodeValue;
+                dtn.innerHTML=num_duplicate_tuples[idx].childNodes[0].nodeValue;
+                nr.innerHTML=(null_ratio[idx].childNodes[0].nodeValue*100).toFixed(2)+'%';
+            }
+            
+        }
+</script>
+
+
+<!-- <script>
+    function checkIfEmpty() {
+        var quality_score = document.getElementById('quality_score').value;
+        var pass_or_fail = document.getElementById('pass_or_fail').value;
+        var pars_id = document.getElementById('pars_id_output');
+
+       
+
+        console.log(quality_score);
+        console.log(pass_or_fail);
+        console.log(pars_id);
+        console.log(typeof pars_id == null)
+        alert ("평가가 완료되었습니다!");
+        
+        //location.reload();
+    }
+    </script> -->
+
+</head>
+
+<body class="fix-header">
+    <!-- ============================================================== -->
+    <!-- Preloader -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Wrapper -->
+    <!-- ============================================================== -->
+    <div id="wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <nav class="navbar navbar-default navbar-static-top m-b-0">
+            <div class="navbar-header">
+                <div class="top-left-part">
+                    <!-- Logo -->
+                    <a class="logo" href="/main">
+                        <!-- Logo icon image, you can use font-icon also -->
+                        <!-- Logo text image you can use text also --><span class="hidden-xs">
+                        <!--This is dark logo text--><img src="/plugins/images/yonsei_logo_bar.jpg" alt="home" class="dark-logo" /><!--This is light logo text--><img src="/plugins/images/yonsei_logo_bar.jpg" alt="home" class="light-logo" />
+                     </span> </a>
+                </div>
+                <!-- /Logo -->
+                <ul class="nav navbar-top-links navbar-right pull-right">
+                    <!-- <li>
+                        <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
+                            <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
+                    </li> -->
+                    <li>
+                        <a class="profile-pic" href="#"> <img src="/plugins/images/users/profile_basic.png" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">{{user.id}}</b></a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-header -->
+            <!-- /.navbar-top-links -->
+            <!-- /.navbar-static-side -->
+            <!-- /.navbar-header -->
+            <!-- /.navbar-top-links -->
+            <!-- /.navbar-static-side -->
+        </nav>
+        <!-- End Top Navigation -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav slimscrollsidebar">
+                <div class="sidebar-head">
+                    <h3><span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span> <span class="hide-menu">Navigation</span></h3>
+                </div>
+                <ul class="nav" id="side-menu">
+                    <li style="padding: 70px 0 0;">
+                        <a href="/rater_router/overview/{{user.id}}" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>평가 내역</a>
+                    </li>
+                    <li>
+                        <a href="/rater_router/manage/{{user.id}}" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>태스크 평가</a>
+                    </li>
+                    
+                </ul>
+                <div class="center p-20">
+                    <a href="/main" class="btn btn-danger btn-block waves-effect waves-light">메인화면으로 돌아가기</a>
+                </div>
+            </div>
+            
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page Content -->
+        <!-- ============================================================== -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">파일 평가 및 점수관리</h4> </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <ol class="breadcrumb">
+                            <li><a href="#">{{user.id}}</a></li>
+                        </ol>
+                    </div>
+                </div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                            <div class="white-box">
+                                <h3 class="box-title">평가를 기다리는 태스크</h3>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>태스크 명</th>
+                                                <th>파싱 데이터 파일 아이디</th>
+                                                <th>제출자 이름</th>
+                                                <th>제출자 ID</th>
+                                                <th>원본 데이터 이름</th>
+                                                <th>평가</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id = 'table'>
+                                            {%for data in pars_data[0]%}
+                                            <tr id = 'data_row'>
+                                                <td id = 'idx'>{{loop.index}}</td> 
+                                                <td id = 'task_table_name'>{{data.task_name}}</td>
+                                                <td id = 'pars_id'>{{data.pars_id}}</td>                                              
+                                                <td id = 'username'>{{data.username}}</td>
+                                                <td id = 'id'>{{data.submitter_id}}</td>
+                                                <td id = 'orign_id'>{{data.name}}</td>
+                                                <td id='upload' hidden>{{data.csv_file_name}}</td>
+                                                <td id='num_duplicate_tuples' hidden>{{data.num_duplicate_tuples}}</td>
+                                                <td id='num_total_tuples' hidden>{{data.num_total_tuples}}</td>
+                                                <td id='null_ratio' hidden>{{data.null_ratio}}</td>
+                                                <td href="javacript:void(0)" class="btn btn btn-rounded btn-default btn-outline m-r-5" id = "evaluate" onClick = 'displayData(`{{loop.index}}`);'><i class="ti-check text-success m-r-5"></i>평가하기</td>
+                                                
+                                            </tr>
+                                            {%endfor%}      
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+
+                    
+                    <div class="col-md-8 col-xs-12" style="width: 100%;">
+                        <div class="white-box">
+                            <form class="form-horizontal form-material" action='/rater_router/save' method="POST">
+                                <div class="form-group">
+                                    <label class="col-md-12"><h3><b>제출자 이름</b></h3></label>
+                                    <div class="col-md-12">
+                                        <h5 class="textarea" id = 'username_output' >제출자 이름(동적데이터)</h5> </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12"><h3><b>제출자 ID</b></h3></label>
+                                    <div class="col-md-12">
+                                        <h5 class="textarea" id = 'id_output' >제출자 ID(동적데이터)</h5> </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-md-3"><h3><b>태스크 이름</b></h3></label>
+                                    <div class="col-md-12">
+                                        <h5 class="textarea" id = 'task_table_name_output'>태스크 이름(동적데이터)</h5> </div>
+                                    </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-md-3" hidden><h3><b>파싱 데이터 파일 아이디</b></h3></label>
+                                    <div class="col-md-12">
+                                        <input  class="textarea" id = 'pars_id_output' name='pars_id' value='1' hidden>파싱 데이터 파일 아이디(동적데이터)</input> </div>
+                                    </div>
+                                <div class="form-group">
+                                    <label class="col-md-12"><h3><b>원본데이터 이름</b></h3></label>
+                                    <div class="col-md-12">
+                                        <h5 class="textarea" id = 'orign_id_output'>원본데이터 이름(동적데이터)</h5> </div>
+                                    </div>
+                                    
+                                <div class="form-group">
+                                    <label class="col-md-12"><h3><b>파싱 데이터 시퀸스 파일</b></h3></label>
+                                    <div class="col-md-12">
+                                        <a href='/rater_router/download/'+{{uploaded_file}} id='uploaded_file'> 파일다운로드</a> </div>
+                                       
+                                    </div>
+
+                                <div class="form-group">
+                                        <label class="col-md-12"><h3>파싱 데이터 시퀸스 파일 정량평가 지수</h3></label>
+
+
+                                        <h4 class="box-title">index</h4>
+                                        <div class="table-responsive">
+                                            <table class="table" border="1">
+                                                <thead>
+                                                    <tr>                                                    
+                                                        <th><center>튜플 수</center></th>
+                                                        <th><center>중복 튜플 수</center></th>
+                                                        <th><center>컬럼 별 NULL 컬럼 비율</center></th> 
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="txt-oflo" id='tn'><center>TUP_NUM(동적데이터)</center></td>
+                                                        <td class="txt-oflo" id='dtn'><center>DUP_TUP_NUM(동적데이터)</center></td>
+                                                        <td><span class="txt-oflo" id='nr'><center>NULL_RATIO(동적데이터)</center></span></td>
+                                                    </tr>                                                
+                                                                                              
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                <div class="form-group">
+                                        
+                                        <label class="col-sm-12">정성평가 점수</label>
+                                        <div class="col-sm-12">
+                                        <select class="form-control form-control-line" id = 'quality_score' name='quality_score'>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">PASS 또는 NON-PASS</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control form-control-line" id = 'pass_or_fail' name='pass_or_fail'>
+                                            <option value="P">P</option>
+                                            <option value="NP">NP</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-success"  type='submit'>  평가 완료  </button> 
+                        
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================== -->
+                <!-- /.row -->
+            </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+            <footer class="footer text-center">2020 &copy; Data Base </footer>
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+
+
+    <script src="/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
+    <!--slimscroll JavaScript -->
+    <script src="/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="/js/waves.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="/js/custom.min.js"></script>
+
+    
+</body>
+
+</html>

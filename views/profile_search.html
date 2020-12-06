@@ -31,6 +31,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">태스크참여</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/task_sys/partic">파일제출</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/task_sys/partic/partic/{{user.id}}">제출현황</a>
+            </li>
             {%endif%}
             {%if user.role==2%}
             <li class="nav-item">
@@ -51,7 +57,7 @@
     right: 0;
     bottom: 0;
     width: 900px;
-    height: 600px;
+    height: auto;
     text-align: center;
     background-color: white;
     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.20), 0 15px 12px rgba(0, 0, 0, 0.12);">
@@ -111,7 +117,7 @@
             <button id="drop" type='submit' class="btn">회원탈퇴</button>-->
             </form>
             {%endif%}
-            {%endfor%}
+            {%if user.role==1%}
             <HR SIZE=3>
             <h3>참여한 태스크 목록</h3>
             <table stylule="width:100%" border="1" align="center">
@@ -124,13 +130,74 @@
                 {%for apply in applys%}
                 <tr>
                     <th>{{apply.task_id}}</th>
-                    <th>{{apply.task_name}}</th>
+                    <th><a href="/task_sys/info/{{apply.task_id}}">{{apply.task_name}}</a></th>
                     <th></th>
                     <th>{{apply.is_approved}}</th>
                 </tr>
                 {%endfor%}
             </table>
-            <a id="logout" typer='submit' onclick="history.back()" class="btn btn-secondary" style="margin-top: 10px;">뒤로가기></a>
+
+            
+            <HR SIZE=3>
+                <h3>제출한 파일 목록</h3>
+                <table stylule="width:100%" border="1" align="center">
+                    <tr>
+                        <th>평가자</th>
+                        <th>태스크ID</th>
+                        <th>태스크이름</th>
+                        <th>데이터타입</th>
+                        <th>전체튜플수</th>
+                        <th>NULL비율</th>
+                        <th>평가점수</th>
+                        <th>P/NP</th>
+                    </tr>
+                    {%for pdf in pdfs%}
+                    <tr>
+                        <th>{{pdf.rater_id}}</th>
+                        <th>{{pdf.submitted_task_id}}</th>
+                        <th><a href="/task_sys/info/{{pdf.submitted_task_id}}">{{pdf.Task.task_name}}</a></th>
+                        <th>{{pdf.odt}}</th>
+                        <th>{{pdf.num_total_tuples}}</th>
+                        <th>{{(pdf.null_ratio*100).toFixed(2)}}%</th>
+                        <th>{{pdf.quality_score}}</th>
+                        <th>{{'평가대기중' if pdf.is_passed==null}}
+                            {{'P' if pdf.is_passed==true}}
+                            {{'NP' if pdf.is_passed==false}}
+                        </th>
+                    </tr>
+                    {%endfor%}
+                </table>
+                {%endif%}
+
+                {%if user.role==2%}
+                <HR SIZE=3>
+                    <h3>평가 파일 목록</h3>
+                    <table stylule="width:100%" border="1" align="center">
+                        <tr>
+                            <th>태스크ID</th>
+                            <th>태스크이름</th>
+                            <th>제출자</th>
+                            <th>파일</th>
+                            <th>평가점수</th>
+                            <th>P/NP</th>
+                        </tr>
+                        {%for pdf in pdfss%}
+                        <tr>
+                            <th>{{pdf.submitted_task_id}}</th>
+                            <th><a href="/task_sys/info/{{pdf.submitted_task_id}}">{{pdf.Task.task_name}}</a></th>
+                            <th>{{pdf.submitter_id}}</th>
+                            <th><a href='/rater_router/download/{{pdf.csv_file_name}}'>{{pdf.csv_file_name}}</a></th>
+                            <th>{{pdf.quality_score}}</th>
+                            <th>{{'평가대기중' if pdf.is_passed==null}}
+                                {{'P' if pdf.is_passed=='P'}}
+                                {{'NP' if pdf.is_passed=='NP'}}
+                            </th>
+                        </tr>
+                        {%endfor%}
+                    </table>
+                {%endif%}
+{%endfor%}
+            <a id="logout" typer='submit' onclick="history.back()" class="btn btn-secondary" style="margin-top: 10px; margin-bottom: 20px;">뒤로가기></a>
         </div>
     </div>
 </div>

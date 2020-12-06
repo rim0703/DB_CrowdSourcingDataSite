@@ -47,7 +47,7 @@
             <div class="navbar-header">
                 <div class="top-left-part">
                     <!-- Logo -->
-                    <a class="logo" href="/index.html">
+                    <a class="logo" href="/main">
                         <!-- Logo icon image, you can use font-icon also -->
                         <!-- Logo text image you can use text also --><span class="hidden-xs">
                         <!--This is dark logo text--><img src="/plugins/images/yonsei_logo_bar.jpg" alt="home" class="dark-logo" /><!--This is light logo text--><img src="/plugins/images/yonsei_logo_bar.jpg" alt="home" class="light-logo" />
@@ -159,14 +159,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                            {%for task in tasks%}
                                         <tr>
-                                            {%for pdf in pdfs.rows%}
-                                            <td class="txt-oflo"><a href='/task_sys/info/{{pdf.submitted_task_id}}'>{{pdf.Task.task_name}}</a></td>                                            
-                                            <td class="txt-oflo">{{pdf.submitted_task_id}}</td>
+                                            <td class="txt-oflo"><a href='/task_sys/info/{{task.task_id}}'>{{task.task_name}}</a></td>                                            
+                                            <td class="txt-oflo">{{task.task_id}}</td>
                                             <td class="txt-oflo">{{pdfs.count}}</td>
                                             <td class="txt-oflo">{{total_tuples}}</td>
-                                            {%endfor%}
-                                        </tr>
+                                                    
+                                        </tr>{%endfor%}
                                     </tbody>
                                 </table>
                             </div>
@@ -191,22 +191,22 @@
                                             <th>PASS 여부</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody>{%for pdf in pdfs.rows%}
                                         <tr>
-                                            {%for pdf in pdfs.rows%}
+                                            
                                             <td class="txt-oflo"><a href='/task_sys/info/{{pdf.submitted_task_id}}'>{{pdf.Task.task_name}}</a></td>                                            
                                             <td class="txt-oflo">{{pdf.submitted_task_id}}</td>
                                             <td class="txt-oflo">{{pdf.odt}}</td>
                                             <td class="txt-oflo">{{pdf.iteration}}</td>
-                                            <td class="txt-oflo"></td>
+                                            <td class="txt-oflo" ><a href="/rater_router/download/{{pdf.csv_file_name}}">파일다운로드</a></td>
                                             <td class="txt-oflo">
                                                 {{ '평가중...' if pdf.is_passed==NULL}}
-                                                {{ 'NP' if pdf.is_passed==false}}
-                                                {{ 'P' if pdf.is_passed==true}}
+                                                {{ 'NP' if pdf.is_passed=='NP'}}
+                                                {{ 'P' if pdf.is_passed=='P'}}
                                             
                                             </td>
-                                            {%endfor%}
-                                        </tr>
+                                            
+                                        </tr>{%endfor%}
                                     </tbody>
                                 </table>
                             </div>

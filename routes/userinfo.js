@@ -1,7 +1,9 @@
 const express=require('express');
 const { isLoggedIn,isNotLoggedIn } = require('./middlewares');
 const User = require('../models/user');
+const Task=require('../models/task');
 const Apply=require('../models/apply');
+const pdf=require('../models/pars_data_seq_file');
 const {Op} =require('sequelize');
 
 const router=express.Router();
@@ -92,8 +94,26 @@ router.get('/stat/:id',isLoggedIn,async(req,res,next)=>{
     const applys=await Apply.findAll({
         where:{user_id:id}
     })
+    //제출자pdfs
+    const pdfs=await pdf.findAll({
+        include:[{
+            model:Task,
+            required:false,
+            attributes:['task_name']
+        }],
+        where:{submitter_id:id}
+    })
+    //평가자pdfss
+    const pdfss=await pdf.findAll({
+        include:[{
+            model:Task,
+            required:false,
+            attributes:['task_name']
+        }],
+        where:{rater_id:id}
+    })
     //console.log(user);
-    res.render('profile_search',{users,applys});
+    res.render('profile_search',{users,applys,pdfs,pdfss});
     console.log("회원정보 조회성공!");
 })
 //컬럼별 회원 검색

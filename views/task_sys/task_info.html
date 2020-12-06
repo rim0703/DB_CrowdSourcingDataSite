@@ -34,6 +34,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">태스크참여</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/task_sys/partic">파일제출</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/task_sys/partic/partic/{{user.id}}">제출현황</a>
+            </li>
             {%endif%}
             {%if user.role==2%}
             <li class="nav-item">
@@ -125,7 +131,7 @@
               </tr>
             </thead>
             <tbody>
-                {%for pdf in pdfs%}
+                {%for pdf in pdfs.rows%}
               <tr>
                 <th scope="row">{{pdf.pars_id}}</th>
                 <td>{{pdf.submitter_id}}</td>
@@ -136,14 +142,36 @@
                 <td>{{(pdf.null_ratio*100).toFixed(2)}}%</td>
                 <td>{{pdf.quality_score}}</td>
                 <td>{{'평가대기중' if pdf.is_passed==null}}
-                    {{'P' if pdf.is_passed==true}}
-                    {{'NP' if pdf.is_passed==false}}
+                    {{'P' if pdf.is_passed=='P'}}
+                    {{'NP' if pdf.is_passed=='NP'}}
                 </td>
 
               </tr>
                 {%endfor%}
             </tbody>
           </table>
+
+
+          <h3 class="card-header"><b>통계</b></h3>
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">제출된 파일 수</th>
+                <th scope="col">총 튜플수</th>
+                <th scope="col">통과튜플수</th>
+                <th scope="col">평균점수</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">{{pdfs.count}}</th>
+                <td>{{total_tuples}}</td>
+                <td>{{passed_tuples}}</td>
+                <td>{{average_score}}</td>
+              </tr>
+            </tbody>
+          </table>
+
 
         <div><a type="button" href="/task_sys" class="btn btn-primary" style="margin-top:30px; margin-bottom: 30px; ">시스템메인페이지</a></div>
         {%endif%}

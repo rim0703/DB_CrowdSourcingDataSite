@@ -160,6 +160,7 @@ router.get('/stat',isLoggedIn,async(req,res,next)=>{
     //console.log(tasks[0].Apply.user_id);
     res.render('./task_sys/task_list',{tasks});
 })
+
 //태스크 삭제하기 (태스크ID 뒤에서부터 재사용가능)
 router.delete('/delete/:id:table_name',isLoggedIn,async (req,res,next)=>{
     //STEP1:태스크 삭제
@@ -236,14 +237,32 @@ router.get('/info/:task_id',isLoggedIn,async(req,res,next)=>{
         where:{task_id:task,
                 is_approved:true},
     })
-    var pdfs=await pdf.findAll({
+    var pdfs=await pdf.findAndCountAll({
         include:{
             model:Task,
             required:false,
             attributes:['task_name']
         }
-    })
-    res.render('./task_sys/task_info',{tasks,odts,task_id,applys,pdfs});
+    });
+    var total_tuples=0;
+    var passed_tuples=0;
+    var score=0;
+    var average_score=0;
+    var passed_files_count=0;
+    for(var i=0;i<pdfs.count;i++){
+        if(pdfs.rows[i].is_passed==true){
+            total_tuples+=pdfs.rows[i].num_total_tuples;
+            passed_tuples+=pdfs.rows[i].num_total_tuples;
+            score+=pdfs.row[i].quality_socre;
+            passed_files_count++;
+        }
+        else{
+            total_tuples+=pdfs.rows[i].num_total_tuples;
+        }
+    }
+    average_score=(score/passed_files_count).toFixed(2);
+    console.log(total_tuples,passed_tuples,average_score);
+    res.render('./task_sys/task_info',{tasks,odts,task_id,applys,pdfs,total_tuples,passed_tuples,average_score});
 }catch(err){
     console.error(err);
     res.send(`<script type="text/javascript">alert(" 에러! 뒤로돌아갑니다.");history.back();</script>`);
@@ -408,7 +427,7 @@ router.get('/partic',isLoggedIn,async(req,res,next)=>{
     res.render('partic_main',{tasks});
 })
 
-/* 1팀: 파일제출 현환 라우터 */
+/* 1팀: 파일제출 현황 라우터 */
 router.get('/partic/partic/:id',isLoggedIn,async(req,res,next)=>{
     var pdfs=await pdf.findAndCountAll({
         include:[
@@ -421,6 +440,18 @@ router.get('/partic/partic/:id',isLoggedIn,async(req,res,next)=>{
         ],
         where:{submitter_id:req.params.id}
     });
+
+    var tasks=await Task.findAll({
+        include:[
+            {
+                model:pdf,
+                required:false,
+                attributes:['num_total_tuples'],
+                where:{rater_id:req.params.id}
+            }
+        ]
+    })
+
     var pass_files=await pdf.findAndCountAll({
         where:{submitter_id:req.params.id,
                 is_passed:'P'}
@@ -431,7 +462,8 @@ router.get('/partic/partic/:id',isLoggedIn,async(req,res,next)=>{
         total_tuples+=pass_files.rows[i].num_total_tuples;
     }
     console.log(total_tuples);
-    res.render('partic_partic',{pdfs,task_count,pass_files,total_tuples});
+    
+    res.render('partic_partic',{tasks,pdfs,task_count,pass_files,total_tuples});
 })
 /* 1팀: 제출자 파일 제출 라우터 */
 router.post('/upload',upload.single('csv_file'),async(req,res,next)=>{

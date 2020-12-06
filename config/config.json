@@ -1,13 +1,13 @@
 {
   "db": {
     "host":"localhost",
-    "user":"root",
-    "password":"",
-    "database":"db"
+    "user":"team12",
+    "password":"973370",
+    "database":"team12"
   },
   "development": {
-    "username": "root",
-    "password": "",
+    "username": "team12",
+    "password": "973370",
     "database": "db",
     "host": "localhost",
     "dialect": "mysql"

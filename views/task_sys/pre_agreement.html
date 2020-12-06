@@ -25,6 +25,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/task_sys">태스크관리</a>
             </li>
+
             {%endif%}
             {%if user.role==1%}
             <li class="nav-item">
@@ -32,6 +33,12 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">태스크참여</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/task_sys/partic">파일제출</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/task_sys/partic/partic/{{user.id}}">제출현황</a>
             </li>
             {%endif%}
             {%if user.role==2%}

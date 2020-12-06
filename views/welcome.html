@@ -39,7 +39,7 @@
                 <a class="nav-link" href="/task_sys/partic">파일제출</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/task_sys/partic/partic">제출현황</a>
+                <a class="nav-link" href="/task_sys/partic/partic/{{user.id}}">제출현황</a>
             </li>
             {%endif%}
             {%if user.role==2%}
@@ -47,7 +47,10 @@
                 <a class="nav-link" href="/profile">내 정보</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">태스크평가</a>
+                <a class="nav-link" href="/rater_router/manage/{{user.id}}">태스크평가</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/rater_router/overview/{{user.id}}">평가내역</a>
             </li>
             {%endif%}
         </ul>
@@ -74,7 +77,7 @@
         {%endif%}
         {% if user and user.id and user.role=='2'%} <!--평가자ID로 로그인-->
         <p><h5>[평가자기능]</h5></p>
-        <a id="task_sys" href="/task_sys/stat" class="btn btn-primary">태스크참여</a>
+        <a id="task_sys" href="/rater_router/overview/{{user.id}}" class="btn btn-primary">태스크평가</a>
         {%endif%}
     </center>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
