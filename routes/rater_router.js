@@ -11,6 +11,7 @@ var mysql = require('mysql2');
 var database=require('../config/config.json');
 var multer=require('multer');
 var upload=multer({dest:'uploads/'});
+var fs=require('fs');
 const { QueryTypes } = require('sequelize');
 
 
@@ -24,11 +25,11 @@ router.get('/manage/:rater_id',isLoggedIn,async(req,res)=>{
 
     con.connect(function(err) {
         if (err) throw err;
-        var sql = `SELECT task_name,pars_id, submitter_id, name, username, csv_file_name, num_duplicate_tuples, num_total_tuples, null_ratio FROM task AS t INNER JOIN pars_data_seq_file AS p ON t.task_id = p.submitted_task_id INNER JOIN users AS u ON u.id = p.submitter_id INNER JOIN original_data_type AS o ON o.t_id = t.task_id WHERE is_evaluated='false' AND rater_id = '` + id + `' AND is_closed = 'false'`;
+        var sql = `SELECT task_name, pars_id, submitter_id, name, username, csv_file_name, is_evaluated, num_duplicate_tuples, num_total_tuples, null_ratio FROM pars_data_seq_file AS p INNER JOIN task AS t ON t.task_id = p.submitted_task_id INNER JOIN users AS u ON u.id = p.submitter_id INNER JOIN original_data_type AS o ON o.t_id = t.task_id WHERE rater_id = '` + id + `'AND is_closed = 'false' AND is_evaluated IS NULL`;
         con.promise()
             .query(sql, {type:QueryTypes.SELECT})
                 .then(pars_data_files => {
-                    //console.log(pars_data_files)
+                    console.log(pars_data_files[1]);
                     res.render('rater_profile', 
                     {pars_data:pars_data_files})
                 })
@@ -42,11 +43,11 @@ router.get('/overview/:rater_id',isLoggedIn,async(req,res)=>{
     console.log(id)
     con.connect(function(err) {
         if (err) throw err;
-        var sql = `SELECT task_name, username, submitter_id, is_passed, quality_score FROM pars_data_seq_file AS p INNER JOIN users AS u ON u.id = p.submitter_id INNER JOIN task AS t ON t.task_id = p.submitted_task_id WHERE is_evaluated='true' AND rater_id = '` + id + `'`;
+        var sql = `SELECT task_name, username, submitter_id, is_passed, quality_score FROM pars_data_seq_file AS p INNER JOIN users AS u ON u.id = p.submitter_id INNER JOIN task AS t ON t.task_id = p.submitted_task_id WHERE is_evaluated is not null AND rater_id = '` + id + `'`;
         
-        var sql_num_submitters = `SELECT COUNT(DISTINCT submitter_id) AS num FROM pars_data_seq_file WHERE is_evaluated = 'true' AND rater_id = '` + id + `'`;
-        var sql_num_seq_file = `SELECT COUNT(DISTINCT pars_id) AS num_seq_file FROM pars_data_seq_file WHERE is_evaluated = 'true' AND rater_id = '` + id + `'`;
-        var sql_avg_score = `SELECT AVG(quality_score) AS score FROM pars_data_seq_file WHERE is_evaluated = 'true' AND rater_id = '` + id + `'`;
+        var sql_num_submitters = `SELECT COUNT(DISTINCT submitter_id) AS num FROM pars_data_seq_file WHERE is_evaluated is not null AND rater_id = '` + id + `'`;
+        var sql_num_seq_file = `SELECT COUNT(DISTINCT pars_id) AS num_seq_file FROM pars_data_seq_file WHERE is_evaluated is not null AND rater_id = '` + id + `'`;
+        var sql_avg_score = `SELECT AVG(quality_score) AS score FROM pars_data_seq_file WHERE is_evaluated is not null AND rater_id = '` + id + `'`;
         //var sql_num_seq_file = `SELECT COUNT(DISTINCT pars_id) AS num_seq_file FROM pars_data_seq_file`;
         con.promise().query(sql, {type:QueryTypes.SELECT})
                 .then(tasks => {
@@ -74,11 +75,19 @@ router.get('/overview/:rater_id',isLoggedIn,async(req,res)=>{
 
 //file다운로드 시 사용되는 라우터 (파일명으로 다운로드)
 router.get('/download/:fileid',isLoggedIn,(req,res)=>{
-    const fileid=String(req.params.fileid);
-    console.log(fileid);
-    const file = './uploads/'+fileid;
-    console.log(file);
-    res.download(String(file)); 
+    try{
+        const fileid=String(req.params.fileid);
+        console.log(fileid);
+        const file = './uploads/'+fileid;
+        console.log(file);
+        fs.statSync(file);
+        res.download(String(file)); 
+    }catch(err){
+        if(err.code==='ENOENT'){
+            res.render('404');
+        }
+    }
+    
 })
 
 //제출된 태스크에 대한 평가를 데이터베이스에 저장

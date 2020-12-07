@@ -242,7 +242,8 @@ router.get('/info/:task_id',isLoggedIn,async(req,res,next)=>{
             model:Task,
             required:false,
             attributes:['task_name']
-        }
+        },
+        where: {submitted_task_id:task}
     });
     var total_tuples=0;
     var passed_tuples=0;

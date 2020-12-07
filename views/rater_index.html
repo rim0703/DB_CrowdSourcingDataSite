@@ -120,8 +120,9 @@
                                 <li>
                                     <div id="sparklinedash"></div>
                                 </li>
-                                <li class="text-right"><i class="ti-arrow-up text-success"></i> <span class="counter text-success">{{evaluated_submitters[0].num}}</span></li>
-                            </ul>
+                                {%for data in evaluated_submitters[0]%}
+                                <li class="text-right"><i class="ti-arrow-up text-success"></i> <span class="counter text-success">{{data.num}}</span></li>
+                                {%endfor%}                            </ul>
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xs-12">
@@ -131,8 +132,9 @@
                                 <li>
                                     <div id="sparklinedash2"></div>
                                 </li>
-                                <li class="text-right"><i class="ti-arrow-up text-purple"></i> <span class="counter text-purple">{{evaluated_files[0].num_seq_file}}</span></li>
-                            </ul>
+                                {%for data in evaluated_files[0]%}
+                                <li class="text-right"><i class="ti-arrow-up text-purple"></i> <span class="counter text-purple">{{data.num_seq_file}}</span></li>
+                                {%endfor%}                            </ul>
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xs-12">
@@ -142,8 +144,9 @@
                                 <li>
                                     <div id="sparklinedash3"></div>
                                 </li>
-                                <li class="text-right"><i class="ti-arrow-up text-info"></i> <span class="counter text-info">{{score[0].score_val}}</span></li>
-                            </ul>
+                                {%for data in score[0]%}
+                                <li class="text-right"><i class="ti-arrow-up text-info"></i> <span class="counter text-info">{{data.score}}</span></li>
+                                {%endfor%}                            </ul>
                         </div>
                     </div>
                 </div>
