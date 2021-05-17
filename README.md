@@ -1,5 +1,53 @@
-# DB_CrowdSourcingDataSite
-## [소주제1 구현내역]
+# 크라우드 소싱데이터 수집사이트
+
+**수행설명서:** 📝[개발명세서](https://github.com/rim0703/DB_CrowdSourcingDataSite/blob/master/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EA%B0%9C%EB%B0%9C%EB%AA%85%EC%84%B8.pdf)
+         📝[수행가이드](https://github.com/rim0703/DB_CrowdSourcingDataSite/blob/master/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%88%98%ED%96%89%EA%B0%80%EC%9D%B4%EB%93%9C.pdf)
+         
+**개발보고서:** 📑[1차 중간보고서](https://github.com/rim0703/DB_CrowdSourcingDataSite/blob/master/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4_%EC%A4%91%EA%B0%84%EB%B3%B4%EA%B3%A0%EC%84%9C_12%ED%8C%80.pdf)
+           📑 [2차 최종보고서](https://github.com/rim0703/DB_CrowdSourcingDataSite/blob/master/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4_%EC%B5%9C%EC%A2%85%EA%B5%AC%ED%98%84%EB%B3%B4%EA%B3%A0%EC%84%9C_%ED%8C%8012.pdf)
+
+--------------------------------------------
+
+**담당파트:** 
+ - 데이터베이스 생성(mysql쿼리작성+DB설정)
+ - (소주제2) 백엔드구현
+ - (소주제1) 백엔드 버그수정
+ - (추가구현) 태스크종료하기
+ - 전체프로젝트 서버에 설치 및 백그라운드 실행
+
+**사용태크:**
+ - Node.js
+ - JavaScript, HTML
+ - Bootstrap(프론트 스타일설정)
+ - Sequelize(DB연동)
+ - passport(로그인개발)
+ - nunjucks(js를 블록으로 코딩)
+ - multer(파일업로드)
+ - csv-parse(파일파싱)
+
+**참고:** Node.js교과서(한빛미디어), 구글링
+
+-----------------------------------------------------------
+
+**시연서버:**
+ - CentOS7
+ - MariaDB
+ - npm을 이용하여 백그라운드 실행
+           
+**시연평가결과(전체18팀):**
+|소주제|평균평점|등수|비고|
+|------|----|----|----|
+|소주제1|74.59|6등|
+|소주제2|78.52|3등|장학금수혜|
+
+
+------------------------------------------------------------------------------
+🔻 아래를 클릭하여 상세내역 확인가능합니다 (시연화면은 [최종보고서](https://github.com/rim0703/DB_CrowdSourcingDataSite/blob/master/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4_%EC%B5%9C%EC%A2%85%EA%B5%AC%ED%98%84%EB%B3%B4%EA%B3%A0%EC%84%9C_%ED%8C%8012.pdf) 확인)
+
+<details>
+ <summary> <b>[소주제1 구현내역]</b>
+ </summary>
+
 ### 1 태스크 참여 신청(완성)
  - ~제출자가 원하는 태스크에 참가하기 위해서는 태스크 참가신청이 필요하다.~
  - ~참가 신청 전에는 개인정보 이용동의서에 확인하는 절차가 필요하다~
@@ -42,8 +90,14 @@
  - 시스템은 각 제출자에 대하여 해당 제출자가 제출한 모든 파싱 데이터 시퀀스 파일들의
 정성&정량 평가 결과를 활용하여 해당 제출자의 평가 점수를 계산하여 주어야한다. 이
 때 평가 점수의 계산 방법은 제한을 두지 않는다.
+  
 
-## [소주제2 구현내역]
+</details>
+
+<details>
+ <summary> <b>[소주제2 구현내역]</b>
+ </summary>
+  
 ### 1 태스크 생성(완성)
  - ~관리자는 태스크를 생성할 수 있다~
  - ~태스크의 기본정보: 태스크 이름. 설명, 최소업로드 주기, 태스크 데이터 테이블 이름, 태스크 데이터 테이블 스키마~
@@ -77,6 +131,11 @@
  - ~평가자 -> 평가자UI~
  - ~모든 사용자는 로그인 후 자신의 기본정보/비밀번호 수정이 가능~
  - ~모든 일반 사용자는 회원탈퇴 가능~
+</details>
 
-### **추가구현내용
+<details>
+ <summary> <b>[추가구현내역]</b>
+ </summary>
+
  - ~태스크 종료하기~
+</details>
